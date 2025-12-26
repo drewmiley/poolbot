@@ -13,7 +13,10 @@ const players = () => [
 	player('DW', false),
 	player('JC', true),
 	player('ND', true, true),
-	player('PC', true)
+	player('PC', true),
+	player('After', false),
+	player('Before', true),
+	player('Either', null)
 ]
 
 console.log(players())
