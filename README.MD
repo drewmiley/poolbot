@@ -1,3 +1,3 @@
-## Ref
+## Poolbot
 
-drewmiley.github.io/ref/ref
+drewmiley.github.io/poolbot/ref
