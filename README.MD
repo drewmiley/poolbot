@@ -1,3 +1,3 @@
 ## Ref
 
-drewmiley.github.io/ref/singles
+drewmiley.github.io/ref/ref

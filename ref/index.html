@@ -2,17 +2,17 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Ref Doubles</title>
-	   <style>
+    <title>Ref Singles</title>
+    <style>
     	body, select, button {
     		font-size: 40px;
     	}
-	  </style>
+    </style>
   </head>
   <body>
   	<div>
-  		PLAYED SIX
-	  	<select name="playSix" id="playSix">
+  		ONE
+	  	<select name="one" id="one">
 			<option value="DD">DD (A)</option>
 			<option value="DM">DM (A)</option>
 			<option value="DW">DW (A)</option>
@@ -25,8 +25,8 @@
 			<option value="SF">SF (A)</option>
 		</select>
 		<br/>
-  		REF SIX
-	  	<select name="refSix" id="refSix">
+  		TWO
+	  	<select name="two" id="two">
 			<option value="DD">DD (A)</option>
 			<option value="DM">DM (A)</option>
 			<option value="DW">DW (A)</option>
@@ -39,8 +39,8 @@
 			<option value="SF">SF (A)</option>
 		</select>
 		<br/>
-  		ONE ONE
-	  	<select name="oneOne" id="oneOne">
+  		THREE
+	  	<select name="three" id="three">
 			<option value="DD">DD (A)</option>
 			<option value="DM">DM (A)</option>
 			<option value="DW">DW (A)</option>
@@ -53,8 +53,8 @@
 			<option value="SF">SF (A)</option>
 		</select>
 		<br/>
-  		ONE TWO
-	  	<select name="oneTwo" id="oneTwo">
+  		FOUR
+	  	<select name="four" id="four">
 			<option value="DD">DD (A)</option>
 			<option value="DM">DM (A)</option>
 			<option value="DW">DW (A)</option>
@@ -67,8 +67,8 @@
 			<option value="SF">SF (A)</option>
 		</select>
 		<br/>
-  		TWO ONE
-	  	<select name="twoOne" id="twoOne">
+  		FIVE
+	  	<select name="five" id="five">
 			<option value="DD">DD (A)</option>
 			<option value="DM">DM (A)</option>
 			<option value="DW">DW (A)</option>
@@ -81,36 +81,8 @@
 			<option value="SF">SF (A)</option>
 		</select>
 		<br/>
-  		TWO TWO
-	  	<select name="twoTwo" id="twoTwo">
-			<option value="DD">DD (A)</option>
-			<option value="DM">DM (A)</option>
-			<option value="DW">DW (A)</option>
-			<option value="JC">JC (B)</option>
-			<option value="LW">LW (A)</option>
-			<option value="ND">ND (B)</option>
-			<option value="PC">PC (B)</option>
-			<option value="PW">PW (Either)</option>
-			<option value="RH">RH (A)</option>
-			<option value="SF">SF (A)</option>
-		</select>
-		<br/>
-  		THREE ONE
-	  	<select name="threeOne" id="threeOne">
-			<option value="DD">DD (A)</option>
-			<option value="DM">DM (A)</option>
-			<option value="DW">DW (A)</option>
-			<option value="JC">JC (B)</option>
-			<option value="LW">LW (A)</option>
-			<option value="ND">ND (B)</option>
-			<option value="PC">PC (B)</option>
-			<option value="PW">PW (Either)</option>
-			<option value="RH">RH (A)</option>
-			<option value="SF">SF (A)</option>
-		</select>
-		<br/>
-  		THREE TWO
-	  	<select name="threeTwo" id="threeTwo">
+  		SIX
+	  	<select name="six" id="six">
 			<option value="DD">DD (A)</option>
 			<option value="DM">DM (A)</option>
 			<option value="DW">DW (A)</option>
@@ -127,7 +99,10 @@
     <div id="refOne"></div>	
     <div id="refTwo"></div>
     <div id="refThree"></div>
-    <script src="../players.js"></script>
+    <div id="refFour"></div>
+    <div id="refFive"></div>
+    <div id="refSix"></div>
+    <script src="./players.js"></script>
     <script src="./selectRef.js"></script>
     <script src="./app.js"></script>
   </body>
