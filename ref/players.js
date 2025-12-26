@@ -7,16 +7,13 @@ const player = (initial, preferenceBeforeInit, wouldPreferToRef) => {
 }
 
 const players = () => [
+	player('CC', null),
 	player('DD', false),
 	player('DM', false, true),
 	player('DW', false),
 	player('JC', true),
-	player('LW', false),
 	player('ND', true, true),
-	player('PC', true),
-	player('PW', null),
-	player('RH', false),
-	player('SF', false)
+	player('PC', true)
 ]
 
 console.log(players())
