@@ -1,4 +1,5 @@
 const getBreaksAssigned = (players, frames) => {
+	// TODO: Tidy up this function - give better name to function
 	let playersWithWeighting = players.reduce((acc, player) => {
 		const playerArray = [...Array(player.numberOfBreaks * 2).keys()].map(_ => player.initial);
 		return acc.concat(playerArray)
@@ -15,6 +16,7 @@ const getBreaksAssigned = (players, frames) => {
 };
 
 const getFramePermutationWithScore = (framePermutation, playersWithBreaksAssigned, isSecondHalf) => {
+	// TODO: Tidy up this function
 	const numberOfFrames = isSecondHalf ? 5 : 6;
 	let score = 0;
 	for (let i = 0; i < numberOfFrames; i++) {
@@ -41,6 +43,7 @@ function selectOrder(options, players) {
 	console.log(options);
 	console.log(players);
 
+	// TODO: Tidy up this function
 	const halfPlayers = players
 		.filter(player => {
 			return options[player.initial.toLowerCase()].isSelected;
@@ -111,6 +114,7 @@ function selectOrder(options, players) {
 		return;
 	}
 
+	// TODO: Maybe draw this out as function
 	const perfectPermutations = framePermutationsWithScore.filter(perm => perm.perfect);
 
 	const index = perfectPermutations.length ? Math.floor(Math.random() * perfectPermutations.length) : Math.floor(Math.random() * framePermutationsWithScore.length)
