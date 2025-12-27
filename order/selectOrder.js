@@ -9,10 +9,33 @@
 // 	notAllocatedInitials.filter(initial => !cannotRefInitials.includes(initial)).join('/');
 
 function selectOrder(options, players) {
+// TODO: ERROR CASE FOR WRONG NUMBER OF PLAYERS SELECTED
+
+	console.log("SELECT ORDER");
 	console.log(options);
 	console.log(players);
 
-// TODO: Use avg number of breaks needed to determine who gets break. For example, Neil is 2, Drew is 0.5, Everyone else is 1. Subtract if second half
+	const halfPlayers = players
+		.filter(player => options[player].isSelected)
+		.map(player => {
+			const numbersOfBreaks = Math.max(player.numberOfBreaks - options[player].hadBreak ? 1 : 0, 0)
+			return [...player, numberOfBreaks];
+		});
+
+	// TODO: Neater way of writing that 
+	let framesInHalf = [];
+	if (options.teamAreAway && options.isFirstHalf) {
+		framesInHalf = [true, false, true, false, true, false];
+	} else if (options.teamAreAway && !options.isFirstHalf) {
+		framesInHalf = [false, true, false, true, false, true];
+	} else if (!options.teamAreAway && options.isFirstHalf) {
+		framesInHalf = [true, false, true, false, true];
+	} else if (!options.teamAreAway && !options.isFirstHalf) {
+		framesInHalf = [false, true, false, true, false];
+	}
+
+	console.log(halfPlayers);
+	console.log(framesInHalf);
 
 	// const playing = [
 	// 	players.find(player => player.initial == one),
