@@ -16,21 +16,27 @@ function selectOrder(options, players) {
 	console.log(players);
 
 	const halfPlayers = players
-		.filter(player => options[player].isSelected)
+		.filter(player => {
+			return options[player.initial.toLowerCase()].isSelected;
+		})
 		.map(player => {
-			const numbersOfBreaks = Math.max(player.numberOfBreaks - options[player].hadBreak ? 1 : 0, 0)
-			return [...player, numberOfBreaks];
+			const numberOfBreaks = player.numberOfBreaks - (options.isSecondHalf && options[player.initial.toLowerCase()].hadBreak ? 1 : 0);
+			return {
+				initial: player.initial,
+				frameOptions: options.isSecondHalf ? player.secondHalfOptions : player.firstHalfOptions,
+				numberOfBreaks: Math.max(numberOfBreaks, 0)
+			};
 		});
 
 	// TODO: Neater way of writing that 
 	let framesInHalf = [];
-	if (options.teamAreAway && options.isFirstHalf) {
+	if (options.teamAreAway && !options.isSecondHalf) {
 		framesInHalf = [true, false, true, false, true, false];
-	} else if (options.teamAreAway && !options.isFirstHalf) {
+	} else if (!options.teamAreAway && !options.isSecondHalf) {
 		framesInHalf = [false, true, false, true, false, true];
-	} else if (!options.teamAreAway && options.isFirstHalf) {
+	} else if (options.teamAreAway && options.isSecondHalf) {
 		framesInHalf = [true, false, true, false, true];
-	} else if (!options.teamAreAway && !options.isFirstHalf) {
+	} else if (!options.teamAreAway && options.isSecondHalf) {
 		framesInHalf = [false, true, false, true, false];
 	}
 

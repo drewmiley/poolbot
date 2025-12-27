@@ -21,7 +21,7 @@ const run = () => {
     console.log('Running');
     const options = {
         teamAreAway: getSelectedCheckbox('teamAreAway'),
-        isFirstHalf: getSelectedCheckbox('isFirstHalf'),
+        isSecondHalf: getSelectedCheckbox('isSecondHalf'),
     	cc: getSelectedOrderParams('cc'),
         dd: getSelectedOrderParams('dd'),
         dm: getSelectedOrderParams('dm'),

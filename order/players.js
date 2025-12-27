@@ -6,13 +6,13 @@ const getFrameOptions = (preferences, isSecondHalf) => {
 	// TODO: Clean up this function
 	let arr = [];
 	if (preferences.includes(EARLY)) {
-		arr.push([0, 1]);
+		arr.push(0, 1);
 	}
 	if (preferences.includes(MIDDLE)) {
-		arr.push([2, 3]);
+		arr.push(2, 3);
 	}
 	if (preferences.includes(LATE)) {
-		isSecondHalf ? arr.push([4, 5]) : arr.push([4]);
+		isSecondHalf ? arr.push(4, 5) : arr.push(4);
 	}
 	return arr;
 }
@@ -22,11 +22,12 @@ const getFirstHalfOptions = firstHalfPreferences => getFrameOptions(firstHalfPre
 const getSecondHalfOptions = secondHalfPreferences => getFrameOptions(secondHalfPreferences, false);
 
 const player = (initial, breakPreferences, firstHalfPreferences, secondHalfPreferences) => {
-	const numbersOfBreaks = breakPreferences.reduce((acc, val) => acc + val) / breakPreferences.length;
+	const numberOfBreaks = breakPreferences.reduce((acc, val) => acc + val) / breakPreferences.length;
 	const firstHalfOptions = getFirstHalfOptions(firstHalfPreferences);
 	const secondHalfOptions = getSecondHalfOptions(secondHalfPreferences);
 	return {
-		numbersOfBreaks,
+		initial,
+		numberOfBreaks,
 		firstHalfOptions,
 		secondHalfOptions
 	}
