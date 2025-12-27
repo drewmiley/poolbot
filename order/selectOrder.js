@@ -1,6 +1,17 @@
 const getBreaksAssigned = (players, frames) => {
-	// TODO: Implement
-	return ['cc', 'dw', 'dd'];
+	let playersWithWeighting = players.reduce((acc, player) => {
+		const playerArray = [...Array(player.numberOfBreaks * 2).keys()].map(_ => player.initial);
+		return acc.concat(playerArray)
+	}, []);
+	const numberOfBreaks = frames.filter(frame => frame).length;
+	let breaks = [];
+	while (breaks.length < numberOfBreaks) {
+		let index = Math.floor(Math.random() * playersWithWeighting.length);
+		let breakingPlayer = playersWithWeighting[index];
+		breaks.push(breakingPlayer);
+		playersWithWeighting = playersWithWeighting.filter(player => players != breakingPlayer);
+	}
+	return breaks;
 };
 
 const getFramePermutationWithScore = (framePermutation, playersWithBreaksAssigned, isSecondHalf) => {
@@ -53,8 +64,8 @@ function selectOrder(options, players) {
 		halfPlayers.push(reserve);
 	}
 
-	if (halfPlayers.length > (options.isSecondHalf ? 5 : 6)) {
-		document.getElementById('errorText').innerText = 'Too many players selected - please modify options';
+	if (halfPlayers.length != (options.isSecondHalf ? 5 : 6)) {
+		document.getElementById('errorText').innerText = 'Wrong number of players selected - please modify options';
 		return;
 	}	
 
@@ -76,7 +87,7 @@ function selectOrder(options, players) {
 	const breaksAssigned = getBreaksAssigned(halfPlayers, framesInHalf);
 
 	const playersWithBreaksAssigned = halfPlayers.map(player => {
-		const playerHasBreak = breaksAssigned.includes(player.initial.toLowerCase());
+		const playerHasBreak = breaksAssigned.includes(player.initial);
 		return {
 			initial: player.initial,
 			frameOptions: player.frameOptions.filter(frameIndex => framesInHalf[frameIndex] === playerHasBreak)
