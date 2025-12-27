@@ -20,10 +20,21 @@ const getFramePermutationWithScore = (framePermutation, playersWithBreaksAssigne
 		const frameIsCorrect = playersWithBreaksAssigned.find(player => player.initial == framePermutation[i]).frameOptions.includes(i);
 		score += frameIsCorrect ? 1 : 0;
 	}
-	return { framePermutation, score };
+	return numberOfFrames - 1 <= score ? { framePermutation, score, perfect: numberOfFrames === score } : null;
+}
+
+function clearText() {
+	document.getElementById('errorText').innerText = '';
+	document.getElementById('orderOne').innerText = '';
+	document.getElementById('orderTwo').innerText = '';
+	document.getElementById('orderThree').innerText = '';
+	document.getElementById('orderFour').innerText = '';
+	document.getElementById('orderFive').innerText = '';
+	document.getElementById('orderSix').innerText = '';
 }
 
 function selectOrder(options, players) {
+	clearText();
 // TODO: ERROR CASE FOR WRONG NUMBER OF PLAYERS SELECTED
 
 	console.log("SELECT ORDER");
@@ -86,61 +97,75 @@ function selectOrder(options, players) {
 	const allPossibleFramePermuations = permutations(playersWithBreaksAssigned.map(player => player.initial));
 
 	const framePermutationsWithScore = allPossibleFramePermuations
-		.map(framePermuation => getFramePermutationWithScore(framePermuation, playersWithBreaksAssigned, options.isSecondHalf));
+		.map(framePermuation => getFramePermutationWithScore(framePermuation, playersWithBreaksAssigned, options.isSecondHalf))
+		.filter(framePermuation => framePermuation != null);
 
 	console.log(allPossibleFramePermuations.length);
 
 	console.log(framePermutationsWithScore);
 
-	// const playing = [
-	// 	players.find(player => player.initial == one),
-	// 	players.find(player => player.initial == two),
-	// 	players.find(player => player.initial == three),
-	// 	players.find(player => player.initial == four),
-	// 	players.find(player => player.initial == five),
-	// 	players.find(player => player.initial == six)
-	// ];
+	if (!framePermutationsWithScore.length) {
+		document.getElementById('errorText').innerText = 'No order found - please re-run to find another';
+	} else {
 
-	// const wantsToRefOptions = [
-	// 	[...playing[1].preferenceBefore ? [playing[1]] : []],
-	// 	[...!playing[0].preferenceBefore ? [playing[0]] : [], ...playing[2].preferenceBefore ? [playing[2]] : []],
-	// 	[...!playing[1].preferenceBefore ? [playing[1]] : [], ...playing[3].preferenceBefore ? [playing[3]] : []],
-	// 	[...!playing[2].preferenceBefore ? [playing[2]] : [], ...playing[4].preferenceBefore ? [playing[4]] : []],
-	// 	[...!playing[3].preferenceBefore ? [playing[3]] : [], ...playing[5].preferenceBefore ? [playing[5]] : []],
-	// 	[...!playing[4].preferenceBefore ? [playing[4]] : []]
-	// ];
+		const perfectPermutations = framePermutationsWithScore.filter(perm => perm.perfect);
 
-	// const cannotRefOptions = [
-	// 	[playing[0].initial, ...!playing[1].preferenceBefore ? [playing[1].initial] : []],
-	// 	[playing[1].initial, ...playing[0].preferenceBefore ? [playing[0].initial] : [], ...!playing[2].preferenceBefore ? [playing[2].initial] : []],
-	// 	[playing[2].initial, ...playing[1].preferenceBefore ? [playing[1].initial] : [], ...!playing[3].preferenceBefore ? [playing[3].initial] : []],
-	// 	[playing[3].initial, ...playing[2].preferenceBefore ? [playing[2].initial] : [], ...!playing[4].preferenceBefore ? [playing[4].initial] : []],
-	// 	[playing[4].initial, ...playing[3].preferenceBefore ? [playing[3].initial] : [], ...!playing[5].preferenceBefore ? [playing[5].initial] : []],
-	// 	[playing[5].initial, ...playing[4].preferenceBefore ? [playing[4].initial] : []]
-	// ]
+		// TODO: Corect index selection
+		const selectedPermuation = perfectPermutations.length ? perfectPermutations[0].framePermutation : framePermutationsWithScore[0].framePermutation; 
 
-	// const initialAllocation = wantsToRefOptions.map(getInitialAllocation);
+		// const playing = [
+		// 	players.find(player => player.initial == one),
+		// 	players.find(player => player.initial == two),
+		// 	players.find(player => player.initial == three),
+		// 	players.find(player => player.initial == four),
+		// 	players.find(player => player.initial == five),
+		// 	players.find(player => player.initial == six)
+		// ];
 
-	// const initialsNotAllocatedFrame = playing.map(player => player.initial).filter(initial => !initialAllocation.includes(initial));
+		// const wantsToRefOptions = [
+		// 	[...playing[1].preferenceBefore ? [playing[1]] : []],
+		// 	[...!playing[0].preferenceBefore ? [playing[0]] : [], ...playing[2].preferenceBefore ? [playing[2]] : []],
+		// 	[...!playing[1].preferenceBefore ? [playing[1]] : [], ...playing[3].preferenceBefore ? [playing[3]] : []],
+		// 	[...!playing[2].preferenceBefore ? [playing[2]] : [], ...playing[4].preferenceBefore ? [playing[4]] : []],
+		// 	[...!playing[3].preferenceBefore ? [playing[3]] : [], ...playing[5].preferenceBefore ? [playing[5]] : []],
+		// 	[...!playing[4].preferenceBefore ? [playing[4]] : []]
+		// ];
 
-	// const fullAllocation = initialAllocation.map((initial, index) =>
-	// 	initial ||
-	// 	getInitialsNotAllocatedJoinedUnlessPlayingFrame(initialsNotAllocatedFrame, cannotRefOptions[index]) ||
-	// 	players.filter(player => !cannotRefOptions[index].includes(player.initial)).map(player => player.initial).join('/')
-	// );
+		// const cannotRefOptions = [
+		// 	[playing[0].initial, ...!playing[1].preferenceBefore ? [playing[1].initial] : []],
+		// 	[playing[1].initial, ...playing[0].preferenceBefore ? [playing[0].initial] : [], ...!playing[2].preferenceBefore ? [playing[2].initial] : []],
+		// 	[playing[2].initial, ...playing[1].preferenceBefore ? [playing[1].initial] : [], ...!playing[3].preferenceBefore ? [playing[3].initial] : []],
+		// 	[playing[3].initial, ...playing[2].preferenceBefore ? [playing[2].initial] : [], ...!playing[4].preferenceBefore ? [playing[4].initial] : []],
+		// 	[playing[4].initial, ...playing[3].preferenceBefore ? [playing[3].initial] : [], ...!playing[5].preferenceBefore ? [playing[5].initial] : []],
+		// 	[playing[5].initial, ...playing[4].preferenceBefore ? [playing[4].initial] : []]
+		// ]
 
-	// document.getElementById('orderOne').innerText = `${fullAllocation[0]}${initialAllocation[0] ? ' *' : ''}`;
-	// document.getElementById('orderTwo').innerText = `${fullAllocation[1]}${initialAllocation[1] ? ' *' : ''}`;
-	// document.getElementById('orderThree').innerText = `${fullAllocation[2]}${initialAllocation[2] ? ' *' : ''}`;
-	// document.getElementById('orderFour').innerText = `${fullAllocation[3]}${initialAllocation[3] ? ' *' : ''}`;
-	// document.getElementById('orderFive').innerText = `${fullAllocation[4]}${initialAllocation[4] ? ' *' : ''}`;
-	// document.getElementById('orderSix').innerText = `${fullAllocation[5]}${initialAllocation[5] ? ' *' : ''}`;
+		// const initialAllocation = wantsToRefOptions.map(getInitialAllocation);
 
-	document.getElementById('orderOne').innerText = 'ONE';
-	document.getElementById('orderTwo').innerText = 'TWO';
-	document.getElementById('orderThree').innerText = 'THREE';
-	document.getElementById('orderFour').innerText = 'FOUR';
-	document.getElementById('orderFive').innerText = 'FIVE';
-	document.getElementById('orderSix').innerText = 'SIX';
+		// const initialsNotAllocatedFrame = playing.map(player => player.initial).filter(initial => !initialAllocation.includes(initial));
+
+		// const fullAllocation = initialAllocation.map((initial, index) =>
+		// 	initial ||
+		// 	getInitialsNotAllocatedJoinedUnlessPlayingFrame(initialsNotAllocatedFrame, cannotRefOptions[index]) ||
+		// 	players.filter(player => !cannotRefOptions[index].includes(player.initial)).map(player => player.initial).join('/')
+		// );
+
+		// document.getElementById('orderOne').innerText = `${fullAllocation[0]}${initialAllocation[0] ? ' *' : ''}`;
+		// document.getElementById('orderTwo').innerText = `${fullAllocation[1]}${initialAllocation[1] ? ' *' : ''}`;
+		// document.getElementById('orderThree').innerText = `${fullAllocation[2]}${initialAllocation[2] ? ' *' : ''}`;
+		// document.getElementById('orderFour').innerText = `${fullAllocation[3]}${initialAllocation[3] ? ' *' : ''}`;
+		// document.getElementById('orderFive').innerText = `${fullAllocation[4]}${initialAllocation[4] ? ' *' : ''}`;
+		// document.getElementById('orderSix').innerText = `${fullAllocation[5]}${initialAllocation[5] ? ' *' : ''}`;
+
+		document.getElementById('orderOne').innerText = `${selectedPermuation[0]}${framesInHalf[0] ? ' (B)' : ''}`;
+		document.getElementById('orderTwo').innerText = `${selectedPermuation[1]}${framesInHalf[1] ? ' (B)' : ''}`;
+		document.getElementById('orderThree').innerText = `${selectedPermuation[2]}${framesInHalf[2] ? ' (B)' : ''}`;
+		document.getElementById('orderFour').innerText = `${selectedPermuation[3]}${framesInHalf[3] ? ' (B)' : ''}`;
+		document.getElementById('orderFive').innerText = `${selectedPermuation[4]}${framesInHalf[4] ? ' (B)' : ''}`;
+		if (!options.isSecondHalf) {
+			document.getElementById('orderSix').innerText = `${selectedPermuation[5]}${framesInHalf[5] ? ' (B)' : ''}`;
+		}
+
+	}
 	console.log('Done');
 }
