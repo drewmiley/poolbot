@@ -19,7 +19,7 @@ const getFrameOptions = (preferences, isSecondHalf) => {
 
 const getFirstHalfOptions = firstHalfPreferences => getFrameOptions(firstHalfPreferences, false);
 
-const getSecondHalfOptions = secondHalfPreferences => getFrameOptions(secondHalfPreferences, false);
+const getSecondHalfOptions = secondHalfPreferences => getFrameOptions(secondHalfPreferences, true);
 
 const player = (initial, breakPreferences, firstHalfPreferences, secondHalfPreferences) => {
 	const numberOfBreaks = breakPreferences.reduce((acc, val) => acc + val) / breakPreferences.length;
