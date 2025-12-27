@@ -9,8 +9,19 @@
 // 	notAllocatedInitials.filter(initial => !cannotRefInitials.includes(initial)).join('/');
 
 const getBreaksAssigned = (players, frames) => {
+	// TODO: Implement
 	return ['cc', 'dw', 'dd'];
 };
+
+const getFramePermutationWithScore = (framePermutation, playersWithBreaksAssigned, isSecondHalf) => {
+	const numberOfFrames = isSecondHalf ? 5 : 6;
+	let score = 0;
+	for (let i = 0; i < numberOfFrames; i++) {
+		const frameIsCorrect = playersWithBreaksAssigned.find(player => player.initial == framePermutation[i]).frameOptions.includes(i);
+		score += frameIsCorrect ? 1 : 0;
+	}
+	return { framePermutation, score };
+}
 
 function selectOrder(options, players) {
 // TODO: ERROR CASE FOR WRONG NUMBER OF PLAYERS SELECTED
@@ -72,9 +83,14 @@ function selectOrder(options, players) {
 
 	console.log(playersWithBreaksAssigned)
 
-	const allPossibleFramePermuations = permutations(halfPlayers.map(player => player.initial));
+	const allPossibleFramePermuations = permutations(playersWithBreaksAssigned.map(player => player.initial));
+
+	const framePermutationsWithScore = allPossibleFramePermuations
+		.map(framePermuation => getFramePermutationWithScore(framePermuation, playersWithBreaksAssigned, options.isSecondHalf));
 
 	console.log(allPossibleFramePermuations.length);
+
+	console.log(framePermutationsWithScore);
 
 	// const playing = [
 	// 	players.find(player => player.initial == one),
