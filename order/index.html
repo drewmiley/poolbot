@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Order Singles</title>
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+  	<div>Order Bot</div>
+  	<br />
+  	<div>
+  		<a id="backtomain" class="button" href="../">Main Menu</a>
+  	</div>
+  	<br />
+  	<div>
+  		Is First Half <input id="isFirstHalf" type="checkbox" />
+  	</div>
+  	<div>
+			CC
+			<br/>
+			Selected: <input type="checkbox" id="ccSelected">
+			Had Break (If 2nd): <input type="checkbox" id="ccHadBreak">
+  	</div>
+  	<div>
+			DD
+			<br/>
+			Selected: <input type="checkbox" id="ddSelected">
+			Had Break (If 2nd): <input type="checkbox"  id="ddHadBreak">
+  	</div>
+  	<div>
+			DM
+			<br/>
+			Selected: <input type="checkbox" id="dmSelected">
+			Had Break (If 2nd): <input type="checkbox" id="dmHadBreak">
+  	</div>
+  	<div>
+			DW
+			<br/>
+			Selected: <input type="checkbox" id="dwSelected">
+			Had Break (If 2nd): <input type="checkbox" id="dwHadBreak">
+  	</div>
+  	<div>
+			JC
+			<br/>
+			Selected: <input type="checkbox" id="jcSelected">
+			Had Break (If 2nd): <input type="checkbox" id="jcHadBreak">
+  	</div>
+  	<div>
+			ND
+			<br/>
+			Selected: <input type="checkbox" id="ndSelected">
+			Had Break (If 2nd): <input type="checkbox" id="ndHadBreak">
+  	</div>
+  	<div>
+			PC
+			<br/>
+			Selected: <input type="checkbox" id="pcSelected">
+			Had Break (If 2nd): <input type="checkbox" id="pcHadBreak">
+  	</div>
+  	<div>
+  		Number of Reserves <input id="numberOfReserves" type="number" value="0" />
+  	</div>
+    <button id="run">Run</button>
+    <div id="orderOne"></div>	
+    <div id="orderTwo"></div>
+    <div id="orderThree"></div>
+    <div id="orderFour"></div>
+    <div id="orderFive"></div>
+    <div id="orderSix"></div>
+    <script src="./players.js"></script>
+    <script src="./selectOrder.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

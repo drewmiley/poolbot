@@ -1,0 +1,21 @@
+const player = (initial, preferenceBeforeInit, wouldPreferToRef) => {
+	return {
+		initial,
+		preferenceBefore: preferenceBeforeInit === null ? Math.random() < 0.5 : preferenceBeforeInit,
+		wouldPreferToRef
+	}
+}
+
+// TODO: Write up data model for players from votes. Number of breaks preference, first half preference, second half preference
+
+const players = () => [
+	player('CC', null),
+	player('DD', false),
+	player('DM', false, true),
+	player('DW', false),
+	player('JC', true),
+	player('ND', true, true),
+	player('PC', true)
+]
+
+console.log(players())
