@@ -25,7 +25,6 @@ function clearText() {
 
 function selectOrder(options, players) {
 	clearText();
-// TODO: ERROR CASE FOR WRONG NUMBER OF PLAYERS SELECTED
 
 	console.log("SELECT ORDER");
 	console.log(options);
