@@ -11,6 +11,9 @@
 function selectOrder(options, players) {
 	console.log(options);
 	console.log(players);
+
+// TODO: Use avg number of breaks needed to determine who gets break. For example, Neil is 2, Drew is 0.5, Everyone else is 1. Subtract if second half
+
 	// const playing = [
 	// 	players.find(player => player.initial == one),
 	// 	players.find(player => player.initial == two),

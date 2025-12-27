@@ -20,6 +20,7 @@ const getSelectedOrderParams = (id) => {
 const run = () => {
     console.log('Running');
     const options = {
+        teamAreAway: getSelectedCheckbox('teamAreAway'),
         isFirstHalf: getSelectedCheckbox('isFirstHalf'),
     	cc: getSelectedOrderParams('cc'),
         dd: getSelectedOrderParams('dd'),
