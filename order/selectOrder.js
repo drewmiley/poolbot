@@ -8,6 +8,10 @@
 // const getInitialsNotAllocatedJoinedUnlessPlayingFrame = (notAllocatedInitials, cannotRefInitials) =>
 // 	notAllocatedInitials.filter(initial => !cannotRefInitials.includes(initial)).join('/');
 
+const getBreaksAssigned = (players, frames) => {
+	return ['cc', 'dw', 'dd'];
+};
+
 function selectOrder(options, players) {
 // TODO: ERROR CASE FOR WRONG NUMBER OF PLAYERS SELECTED
 
@@ -52,6 +56,25 @@ function selectOrder(options, players) {
 
 	console.log(halfPlayers);
 	console.log(framesInHalf);
+
+	// TODO: Assign breaks
+	// TODO: Set players with breaksAssigned
+
+	const breaksAssigned = getBreaksAssigned(halfPlayers, framesInHalf);
+
+	const playersWithBreaksAssigned = halfPlayers.map(player => {
+		const playerHasBreak = breaksAssigned.includes(player.initial.toLowerCase());
+		return {
+			initial: player.initial,
+			frameOptions: player.frameOptions.filter(frameIndex => framesInHalf[frameIndex] === playerHasBreak)
+		}
+	});
+
+	console.log(playersWithBreaksAssigned)
+
+	const allPossibleFramePermuations = permutations(halfPlayers.map(player => player.initial));
+
+	console.log(allPossibleFramePermuations.length);
 
 	// const playing = [
 	// 	players.find(player => player.initial == one),
