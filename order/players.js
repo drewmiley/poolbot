@@ -12,7 +12,7 @@ const getFrameOptions = (preferences, isSecondHalf) => {
 		arr.push(2, 3);
 	}
 	if (preferences.includes(LATE)) {
-		isSecondHalf ? arr.push(4, 5) : arr.push(4);
+		isSecondHalf ? arr.push(4) : arr.push(4, 5);
 	}
 	return arr;
 }

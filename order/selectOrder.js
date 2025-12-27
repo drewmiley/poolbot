@@ -28,6 +28,16 @@ function selectOrder(options, players) {
 			};
 		});
 
+	// TODO: Neater way of doing this
+	for (let i = 0; i < options.numberOfReserves; i++) {
+		let reserve = {
+			initial: `R${i + 1}`,
+			frameOptions: options.isSecondHalf ? [0, 1, 2, 3, 4] : [0, 1, 2, 3, 4, 5],
+			numberOfBreaks: 0.5
+		}
+		halfPlayers.push(reserve);
+	}	
+
 	// TODO: Neater way of writing that 
 	let framesInHalf = [];
 	if (options.teamAreAway && !options.isSecondHalf) {
