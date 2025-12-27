@@ -52,6 +52,11 @@ function selectOrder(options, players) {
 			numberOfBreaks: 0.5
 		}
 		halfPlayers.push(reserve);
+	}
+
+	if (halfPlayers.length > (options.isSecondHalf ? 5 : 6)) {
+		document.getElementById('errorText').innerText = 'Too many players selected - please modify options';
+		return;
 	}	
 
 	// TODO: Neater way of writing that 
@@ -68,9 +73,6 @@ function selectOrder(options, players) {
 
 	console.log(halfPlayers);
 	console.log(framesInHalf);
-
-	// TODO: Assign breaks
-	// TODO: Set players with breaksAssigned
 
 	const breaksAssigned = getBreaksAssigned(halfPlayers, framesInHalf);
 
@@ -96,22 +98,21 @@ function selectOrder(options, players) {
 
 	if (!framePermutationsWithScore.length) {
 		document.getElementById('errorText').innerText = 'No order found - please re-run to find another';
-	} else {
+		return;
+	}
 
-		const perfectPermutations = framePermutationsWithScore.filter(perm => perm.perfect);
+	const perfectPermutations = framePermutationsWithScore.filter(perm => perm.perfect);
 
-		// TODO: Corect index selection
-		const selectedPermuation = perfectPermutations.length ? perfectPermutations[0].framePermutation : framePermutationsWithScore[0].framePermutation;
+	const index = perfectPermutations.length ? Math.floor(Math.random() * perfectPermutations.length) : Math.floor(Math.random() * framePermutationsWithScore.length)
+	const selectedPermuation = perfectPermutations.length ? perfectPermutations[index].framePermutation : framePermutationsWithScore[index].framePermutation;
 
-		document.getElementById('orderOne').innerText = `${selectedPermuation[0]}${framesInHalf[0] ? ' (B)' : ''}`;
-		document.getElementById('orderTwo').innerText = `${selectedPermuation[1]}${framesInHalf[1] ? ' (B)' : ''}`;
-		document.getElementById('orderThree').innerText = `${selectedPermuation[2]}${framesInHalf[2] ? ' (B)' : ''}`;
-		document.getElementById('orderFour').innerText = `${selectedPermuation[3]}${framesInHalf[3] ? ' (B)' : ''}`;
-		document.getElementById('orderFive').innerText = `${selectedPermuation[4]}${framesInHalf[4] ? ' (B)' : ''}`;
-		if (!options.isSecondHalf) {
-			document.getElementById('orderSix').innerText = `${selectedPermuation[5]}${framesInHalf[5] ? ' (B)' : ''}`;
-		}
-
+	document.getElementById('orderOne').innerText = `${selectedPermuation[0]}${framesInHalf[0] ? ' (B)' : ''}`;
+	document.getElementById('orderTwo').innerText = `${selectedPermuation[1]}${framesInHalf[1] ? ' (B)' : ''}`;
+	document.getElementById('orderThree').innerText = `${selectedPermuation[2]}${framesInHalf[2] ? ' (B)' : ''}`;
+	document.getElementById('orderFour').innerText = `${selectedPermuation[3]}${framesInHalf[3] ? ' (B)' : ''}`;
+	document.getElementById('orderFive').innerText = `${selectedPermuation[4]}${framesInHalf[4] ? ' (B)' : ''}`;
+	if (!options.isSecondHalf) {
+		document.getElementById('orderSix').innerText = `${selectedPermuation[5]}${framesInHalf[5] ? ' (B)' : ''}`;
 	}
 	console.log('Done');
 }
