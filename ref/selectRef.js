@@ -9,23 +9,7 @@ const getWantToRefOptions = (playing) => {
 			...playing[i + 1].preferenceBefore ? [playing[i + 1]] : []
 		];
 	});
-	// const middleWantsToRefOptions = [
-	// 	[...!playing[0].preferenceBefore ? [playing[0]] : [], ...playing[2].preferenceBefore ? [playing[2]] : []],
-	// 	[...!playing[1].preferenceBefore ? [playing[1]] : [], ...playing[3].preferenceBefore ? [playing[3]] : []],
-	// 	[...!playing[2].preferenceBefore ? [playing[2]] : [], ...playing[4].preferenceBefore ? [playing[4]] : []],
-	// 	[...!playing[3].preferenceBefore ? [playing[3]] : [], ...playing[5].preferenceBefore ? [playing[5]] : []],
-	// ];
 	const lastWantsToRefOption = !playing[playing.length - 2].preferenceBefore ? [playing[playing.length - 2]] : [];
-	// TODO: Do depending on size of playing (5/6)
-	// const wantsToRefOptions = [
-	// 	[...playing[1].preferenceBefore ? [playing[1]] : []],
-	// 	[...!playing[0].preferenceBefore ? [playing[0]] : [], ...playing[2].preferenceBefore ? [playing[2]] : []],
-	// 	[...!playing[1].preferenceBefore ? [playing[1]] : [], ...playing[3].preferenceBefore ? [playing[3]] : []],
-	// 	[...!playing[2].preferenceBefore ? [playing[2]] : [], ...playing[4].preferenceBefore ? [playing[4]] : []],
-	// 	[...!playing[3].preferenceBefore ? [playing[3]] : [], ...playing[5].preferenceBefore ? [playing[5]] : []],
-	// 	[...!playing[4].preferenceBefore ? [playing[4]] : []]
-	// ];
-	// return wantsToRefOptions;
 	return [].concat([firstWantToRefOption], middleWantsToRefOptions, [lastWantsToRefOption]);
 }
 
@@ -44,26 +28,10 @@ const getCannotRefOptions = (playing, isSecondHalf) => {
 			...!playing[i + 1].preferenceBefore ? [playing[i + 1].initial] : []
 		];
 	});
-	// const middleCannotRefOptions = [
-	// 	[playing[1].initial, ...playing[0].preferenceBefore ? [playing[0].initial] : [], ...!playing[2].preferenceBefore ? [playing[2].initial] : []],
-	// 	[playing[2].initial, ...playing[1].preferenceBefore ? [playing[1].initial] : [], ...!playing[3].preferenceBefore ? [playing[3].initial] : []],
-	// 	[playing[3].initial, ...playing[2].preferenceBefore ? [playing[2].initial] : [], ...!playing[4].preferenceBefore ? [playing[4].initial] : []],
-	// 	[playing[4].initial, ...playing[3].preferenceBefore ? [playing[3].initial] : [], ...!playing[5].preferenceBefore ? [playing[5].initial] : []],
-	// ]
 	const lastCannotRefOption = [
 		playing[playing.length - 1].initial,
 		...playing[playing.length - 2].preferenceBefore ? [playing[playing.length - 2].initial] : []
 	];
-	// TODO: Do depending on size of playing (5/6)
-	// const cannotRefOptions = [
-	// 	[playing[0].initial, ...!playing[1].preferenceBefore ? [playing[1].initial] : []],
-	// 	[playing[1].initial, ...playing[0].preferenceBefore ? [playing[0].initial] : [], ...!playing[2].preferenceBefore ? [playing[2].initial] : []],
-	// 	[playing[2].initial, ...playing[1].preferenceBefore ? [playing[1].initial] : [], ...!playing[3].preferenceBefore ? [playing[3].initial] : []],
-	// 	[playing[3].initial, ...playing[2].preferenceBefore ? [playing[2].initial] : [], ...!playing[4].preferenceBefore ? [playing[4].initial] : []],
-	// 	[playing[4].initial, ...playing[3].preferenceBefore ? [playing[3].initial] : [], ...!playing[5].preferenceBefore ? [playing[5].initial] : []],
-	// 	[playing[5].initial, ...playing[4].preferenceBefore ? [playing[4].initial] : []]
-	// ]
-	// return cannotRefOptions;
 	return [].concat([firstCannotRefOption], middleCannotRefOptions, [lastCannotRefOption]);
 }
 
