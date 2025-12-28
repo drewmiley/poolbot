@@ -1,3 +1,39 @@
+const getPlaying = (players, isSecondHalf, one, two, three, four, five, six) => {
+	const playing = [
+		players.find(player => player.initial == one),
+		players.find(player => player.initial == two),
+		players.find(player => player.initial == three),
+		players.find(player => player.initial == four),
+		players.find(player => player.initial == five),
+		players.find(player => player.initial == six)
+	];
+	return playing;
+}
+
+const getWantToRefOptions = (playing, isSecondHalf) => {
+	const wantsToRefOptions = [
+		[...playing[1].preferenceBefore ? [playing[1]] : []],
+		[...!playing[0].preferenceBefore ? [playing[0]] : [], ...playing[2].preferenceBefore ? [playing[2]] : []],
+		[...!playing[1].preferenceBefore ? [playing[1]] : [], ...playing[3].preferenceBefore ? [playing[3]] : []],
+		[...!playing[2].preferenceBefore ? [playing[2]] : [], ...playing[4].preferenceBefore ? [playing[4]] : []],
+		[...!playing[3].preferenceBefore ? [playing[3]] : [], ...playing[5].preferenceBefore ? [playing[5]] : []],
+		[...!playing[4].preferenceBefore ? [playing[4]] : []]
+	];
+	return wantsToRefOptions;
+}
+
+const getCannotRefOptions = (playing, isSecondHalf) => {
+	const cannotRefOptions = [
+		[playing[0].initial, ...!playing[1].preferenceBefore ? [playing[1].initial] : []],
+		[playing[1].initial, ...playing[0].preferenceBefore ? [playing[0].initial] : [], ...!playing[2].preferenceBefore ? [playing[2].initial] : []],
+		[playing[2].initial, ...playing[1].preferenceBefore ? [playing[1].initial] : [], ...!playing[3].preferenceBefore ? [playing[3].initial] : []],
+		[playing[3].initial, ...playing[2].preferenceBefore ? [playing[2].initial] : [], ...!playing[4].preferenceBefore ? [playing[4].initial] : []],
+		[playing[4].initial, ...playing[3].preferenceBefore ? [playing[3].initial] : [], ...!playing[5].preferenceBefore ? [playing[5].initial] : []],
+		[playing[5].initial, ...playing[4].preferenceBefore ? [playing[4].initial] : []]
+	]
+	return cannotRefOptions;
+}
+
 const getInitialAllocation = initialArray => {
 	if (!initialArray.length) return null;
 	if (initialArray.length == 1) return initialArray[0].initial;
@@ -8,33 +44,32 @@ const getInitialAllocation = initialArray => {
 const getInitialsNotAllocatedJoinedUnlessPlayingFrame = (notAllocatedInitials, cannotRefInitials) =>
 	notAllocatedInitials.filter(initial => !cannotRefInitials.includes(initial)).join('/');
 
-function selectRef({ one, two, three, four, five, six }, players) {
-	const playing = [
-		players.find(player => player.initial == one),
-		players.find(player => player.initial == two),
-		players.find(player => player.initial == three),
-		players.find(player => player.initial == four),
-		players.find(player => player.initial == five),
-		players.find(player => player.initial == six)
-	];
+function clearText() {
+	document.getElementById('errorText').innerText = '';
+	document.getElementById('refOne').innerText = '';
+	document.getElementById('refTwo').innerText = '';
+	document.getElementById('refThree').innerText = '';
+	document.getElementById('refFour').innerText = '';
+	document.getElementById('refFive').innerText = '';
+	document.getElementById('refSix').innerText = '';
+}	
 
-	const wantsToRefOptions = [
-		[...playing[1].preferenceBefore ? [playing[1]] : []],
-		[...!playing[0].preferenceBefore ? [playing[0]] : [], ...playing[2].preferenceBefore ? [playing[2]] : []],
-		[...!playing[1].preferenceBefore ? [playing[1]] : [], ...playing[3].preferenceBefore ? [playing[3]] : []],
-		[...!playing[2].preferenceBefore ? [playing[2]] : [], ...playing[4].preferenceBefore ? [playing[4]] : []],
-		[...!playing[3].preferenceBefore ? [playing[3]] : [], ...playing[5].preferenceBefore ? [playing[5]] : []],
-		[...!playing[4].preferenceBefore ? [playing[4]] : []]
-	];
+function selectRef({ isSecondHalf, one, two, three, four, five, six }, players) {
+	if (!one || !two || !three || !four || !five || (!six && isSecondHalf)) {
+		document.getElementById('errorText').innerText = 'Wrong number of players selected - please modify options';
+		return;
+	}
+	if (six && isSecondHalf) {
+		document.getElementById('errorText').innerText = 'SIX selected when 2nd half - please modify options';
+		return;
+	}
 
-	const cannotRefOptions = [
-		[playing[0].initial, ...!playing[1].preferenceBefore ? [playing[1].initial] : []],
-		[playing[1].initial, ...playing[0].preferenceBefore ? [playing[0].initial] : [], ...!playing[2].preferenceBefore ? [playing[2].initial] : []],
-		[playing[2].initial, ...playing[1].preferenceBefore ? [playing[1].initial] : [], ...!playing[3].preferenceBefore ? [playing[3].initial] : []],
-		[playing[3].initial, ...playing[2].preferenceBefore ? [playing[2].initial] : [], ...!playing[4].preferenceBefore ? [playing[4].initial] : []],
-		[playing[4].initial, ...playing[3].preferenceBefore ? [playing[3].initial] : [], ...!playing[5].preferenceBefore ? [playing[5].initial] : []],
-		[playing[5].initial, ...playing[4].preferenceBefore ? [playing[4].initial] : []]
-	]
+	// TODO: Make [one, two, etc.] an array
+	const playing = getPlaying(players, isSecondHalf, one, two, three, four, five, six);
+
+	const wantsToRefOptions = getWantToRefOptions(playing, isSecondHalf);
+
+	const cannotRefOptions = getCannotRefOptions(playing, isSecondHalf);
 
 	const initialAllocation = wantsToRefOptions.map(getInitialAllocation);
 
@@ -52,6 +87,8 @@ function selectRef({ one, two, three, four, five, six }, players) {
 	document.getElementById('refThree').innerText = `${fullAllocation[2]}${initialAllocation[2] ? ' *' : ''}`;
 	document.getElementById('refFour').innerText = `${fullAllocation[3]}${initialAllocation[3] ? ' *' : ''}`;
 	document.getElementById('refFive').innerText = `${fullAllocation[4]}${initialAllocation[4] ? ' *' : ''}`;
-	document.getElementById('refSix').innerText = `${fullAllocation[5]}${initialAllocation[5] ? ' *' : ''}`;
+	if (isSecondHalf) {
+		document.getElementById('refSix').innerText = `${fullAllocation[5]}${initialAllocation[5] ? ' *' : ''}`;
+	}
 	console.log('Done');
 }
