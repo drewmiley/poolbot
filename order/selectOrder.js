@@ -77,7 +77,7 @@ function selectOrder(options, players) {
 	if (halfPlayers.length != (options.isSecondHalf ? 5 : 6)) {
 		document.getElementById('errorText').innerText = 'Wrong number of players selected - please modify options';
 		return;
-	}	
+	}
 
 	// TODO: Neater way of writing that 
 	let framesInHalf = [];
