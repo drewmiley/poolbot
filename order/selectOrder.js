@@ -124,13 +124,15 @@ function selectOrder(options, players) {
 
 	const selectedPermutation = selectPermutation(bestFramePermutations);
 
-	document.getElementById('orderOne').innerText = `${selectedPermutation[0]}${framesInHalf[0] ? ' (B)' : ''}`;
-	document.getElementById('orderTwo').innerText = `${selectedPermutation[1]}${framesInHalf[1] ? ' (B)' : ''}`;
-	document.getElementById('orderThree').innerText = `${selectedPermutation[2]}${framesInHalf[2] ? ' (B)' : ''}`;
-	document.getElementById('orderFour').innerText = `${selectedPermutation[3]}${framesInHalf[3] ? ' (B)' : ''}`;
-	document.getElementById('orderFive').innerText = `${selectedPermutation[4]}${framesInHalf[4] ? ' (B)' : ''}`;
+	// Potential TODO: Add * if person gets their preference
+	// Potential TODO: Put this in a forEachLoop
+	document.getElementById('orderOne').innerText = `${selectedPermutation[0]}${framesInHalf[0] ? ' (Br)' : ''}`;
+	document.getElementById('orderTwo').innerText = `${selectedPermutation[1]}${framesInHalf[1] ? ' (Br)' : ''}`;
+	document.getElementById('orderThree').innerText = `${selectedPermutation[2]}${framesInHalf[2] ? ' (Br)' : ''}`;
+	document.getElementById('orderFour').innerText = `${selectedPermutation[3]}${framesInHalf[3] ? ' (Br)' : ''}`;
+	document.getElementById('orderFive').innerText = `${selectedPermutation[4]}${framesInHalf[4] ? ' (Br)' : ''}`;
 	if (!options.isSecondHalf) {
-		document.getElementById('orderSix').innerText = `${selectedPermutation[5]}${framesInHalf[5] ? ' (B)' : ''}`;
+		document.getElementById('orderSix').innerText = `${selectedPermutation[5]}${framesInHalf[5] ? ' (Br)' : ''}`;
 	}
 	console.log('Done');
 }
