@@ -78,7 +78,7 @@ function selectRef({ isSecondHalf, one, two, three, four, five, six }, players) 
 	document.getElementById('refThree').innerText = `${fullAllocation[2]}${initialAllocation[2] ? ' *' : ''}`;
 	document.getElementById('refFour').innerText = `${fullAllocation[3]}${initialAllocation[3] ? ' *' : ''}`;
 	document.getElementById('refFive').innerText = `${fullAllocation[4]}${initialAllocation[4] ? ' *' : ''}`;
-	if (isSecondHalf) {
+	if (!isSecondHalf) {
 		document.getElementById('refSix').innerText = `${fullAllocation[5]}${initialAllocation[5] ? ' *' : ''}`;
 	}
 	console.log('Done');
