@@ -1,15 +1,3 @@
-const getPlaying = (players, isSecondHalf, one, two, three, four, five, six) => {
-	const playing = [
-		players.find(player => player.initial == one),
-		players.find(player => player.initial == two),
-		players.find(player => player.initial == three),
-		players.find(player => player.initial == four),
-		players.find(player => player.initial == five),
-		players.find(player => player.initial == six)
-	];
-	return playing;
-}
-
 const getWantToRefOptions = (playing, isSecondHalf) => {
 	const wantsToRefOptions = [
 		[...playing[1].preferenceBefore ? [playing[1]] : []],
@@ -55,6 +43,8 @@ function clearText() {
 }	
 
 function selectRef({ isSecondHalf, one, two, three, four, five, six }, players) {
+	clearText();
+
 	if (!one || !two || !three || !four || !five || (!six && isSecondHalf)) {
 		document.getElementById('errorText').innerText = 'Wrong number of players selected - please modify options';
 		return;
@@ -64,8 +54,9 @@ function selectRef({ isSecondHalf, one, two, three, four, five, six }, players) 
 		return;
 	}
 
-	// TODO: Make [one, two, etc.] an array
-	const playing = getPlaying(players, isSecondHalf, one, two, three, four, five, six);
+	const selectedPlayers = isSecondHalf ? [one, two, three, four, five] : [one, two, three, four, five, six];
+	// TODO: Test for error case where same player has been selected
+	const playing = selectedPlayers.map(selected => players.find(player => player.initial == selected));
 
 	const wantsToRefOptions = getWantToRefOptions(playing, isSecondHalf);
 
