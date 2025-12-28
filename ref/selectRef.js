@@ -1,33 +1,33 @@
 const getWantToRefOptions = (playing) => {
-	const middleFrames = playing
-		.map((d, i) => i)
-		.filter(i => i != 0 && i != playing.length - 1);
 	const firstWantToRefOption = playing[1].preferenceBefore ? [playing[1]] : [];
-	const middleWantsToRefOptions = middleFrames.map(i => {
-		return [
-			...!playing[i - 1].preferenceBefore ? [playing[i - 1]] : [],
-			...playing[i + 1].preferenceBefore ? [playing[i + 1]] : []
-		];
-	});
+	const middleWantsToRefOptions = playing
+		.map((d, i) => i)
+		.filter(i => i != 0 && i != playing.length - 1)
+		.map(i => {
+			return [
+				...!playing[i - 1].preferenceBefore ? [playing[i - 1]] : [],
+				...playing[i + 1].preferenceBefore ? [playing[i + 1]] : []
+			];
+		});
 	const lastWantsToRefOption = !playing[playing.length - 2].preferenceBefore ? [playing[playing.length - 2]] : [];
 	return [].concat([firstWantToRefOption], middleWantsToRefOptions, [lastWantsToRefOption]);
 }
 
 const getCannotRefOptions = (playing, isSecondHalf) => {
-	const middleFrames = playing
-		.map((d, i) => i)
-		.filter(i => i != 0 && i != playing.length - 1);
 	const firstCannotRefOption = [
 		playing[0].initial,
 		...!playing[1].preferenceBefore ? [playing[1].initial] : []
 	];
-	const middleCannotRefOptions = middleFrames.map(i => {
-		return [
-			playing[i].initial,
-			...playing[i - 1].preferenceBefore ? [playing[i - 1].initial] : [],
-			...!playing[i + 1].preferenceBefore ? [playing[i + 1].initial] : []
-		];
-	});
+	const middleCannotRefOptions = playing
+		.map((d, i) => i)
+		.filter(i => i != 0 && i != playing.length - 1)
+		.map(i => {
+			return [
+				playing[i].initial,
+				...playing[i - 1].preferenceBefore ? [playing[i - 1].initial] : [],
+				...!playing[i + 1].preferenceBefore ? [playing[i + 1].initial] : []
+			];
+		});
 	const lastCannotRefOption = [
 		playing[playing.length - 1].initial,
 		...playing[playing.length - 2].preferenceBefore ? [playing[playing.length - 2].initial] : []
