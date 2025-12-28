@@ -73,7 +73,10 @@ function selectRef({ isSecondHalf, one, two, three, four, five, six }, players) 
 	}
 
 	const selectedPlayers = isSecondHalf ? [one, two, three, four, five] : [one, two, three, four, five, six];
-	// TODO: Test for error case where same player has been selected
+	if (new Set(selectedPlayers).size != selectedPlayers.length) {
+		document.getElementById('errorText').innerText = 'Player has been selected more than once - please modify options';
+		return;
+	}
 	const playing = selectedPlayers.map(selected => players.find(player => player.initial == selected));
 
 	const wantsToRefOptions = getWantToRefOptions(playing);
