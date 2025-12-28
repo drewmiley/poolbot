@@ -84,7 +84,7 @@ function clearText() {
 function selectRef({ isSecondHalf, one, two, three, four, five, six }, players) {
 	clearText();
 
-	if (!one || !two || !three || !four || !five || (!six && isSecondHalf)) {
+	if (!one || !two || !three || !four || !five || (!six && !isSecondHalf)) {
 		document.getElementById('errorText').innerText = 'Wrong number of players selected - please modify options';
 		return;
 	}
