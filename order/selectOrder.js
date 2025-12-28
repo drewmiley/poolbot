@@ -43,8 +43,9 @@ const getBestFramePermutations = (framePermutation, playersWithBreaksAssigned) =
 	for (let i = 0; i < playersWithBreaksAssigned.length; i++) {
 		const frameIsCorrect = playersWithBreaksAssigned.find(player => player.initial == framePermutation[i]).frameOptions.includes(i);
 		unhappyFrames += !frameIsCorrect ? 1 : 0;
+		if (unhappyFrames > 1) return null;
 	}
-	return unhappyFrames <= 1 ? { framePermutation, perfect: !unhappyFrames } : null;
+	return { framePermutation, perfect: !unhappyFrames };
 }
 
 const selectPermutation = framePermutationsWithScore => {
