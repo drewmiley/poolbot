@@ -46,6 +46,7 @@ function selectRef({ one, two, three, four, five, six }, players) {
 		players.filter(player => !cannotRefOptions[index].includes(player.initial)).map(player => player.initial).join('/')
 	);
 
+	// Potential TODO: Put this in a forEachLoop
 	document.getElementById('refOne').innerText = `${fullAllocation[0]}${initialAllocation[0] ? ' *' : ''}`;
 	document.getElementById('refTwo').innerText = `${fullAllocation[1]}${initialAllocation[1] ? ' *' : ''}`;
 	document.getElementById('refThree').innerText = `${fullAllocation[2]}${initialAllocation[2] ? ' *' : ''}`;
