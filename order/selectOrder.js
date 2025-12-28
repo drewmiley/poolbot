@@ -29,7 +29,7 @@ const getPlayersAssignedBreaks = (players, frames) => {
 	}, []);
 	const numberOfBreaks = frames.filter(hasBreak => hasBreak).length;
 	let breaks = [];
-	// TODO: Can I remove while loop here?
+	// TODO: Can I remove while loop here and use reduce?
 	while (breaks.length < numberOfBreaks) {
 		const remainingPlayersWithWeighting = playersWithWeighting.filter(player => !breaks.includes(player));
 		const index = Math.floor(Math.random() * remainingPlayersWithWeighting.length);
@@ -48,6 +48,7 @@ const getBestFramePermutations = (framePermutation, playersWithBreaksAssigned) =
 }
 
 const selectPermutation = framePermutationsWithScore => {
+	// TODO: MIGHT AS WELL USE IF/ELSE HERE
 	const perfectPermutations = framePermutationsWithScore.filter(perm => perm.perfect);
 	const index = perfectPermutations.length ? Math.floor(Math.random() * perfectPermutations.length) : Math.floor(Math.random() * framePermutationsWithScore.length)
 	return perfectPermutations.length ? perfectPermutations[index].framePermutation : framePermutationsWithScore[index].framePermutation;
