@@ -125,14 +125,13 @@ function selectOrder(options, players) {
 	const selectedPermutation = selectPermutation(bestFramePermutations);
 
 	// Potential TODO: Add * if person gets their preference
-	// Potential TODO: Put this in a forEachLoop
-	document.getElementById('orderOne').innerText = `${selectedPermutation[0]}${framesInHalf[0] ? ' (Br)' : ''}`;
-	document.getElementById('orderTwo').innerText = `${selectedPermutation[1]}${framesInHalf[1] ? ' (Br)' : ''}`;
-	document.getElementById('orderThree').innerText = `${selectedPermutation[2]}${framesInHalf[2] ? ' (Br)' : ''}`;
-	document.getElementById('orderFour').innerText = `${selectedPermutation[3]}${framesInHalf[3] ? ' (Br)' : ''}`;
-	document.getElementById('orderFive').innerText = `${selectedPermutation[4]}${framesInHalf[4] ? ' (Br)' : ''}`;
-	if (!options.isSecondHalf) {
-		document.getElementById('orderSix').innerText = `${selectedPermutation[5]}${framesInHalf[5] ? ' (Br)' : ''}`;
-	}
+	const frameNumbers = isSecondHalf ?
+		['One', 'Two', 'Three', 'Four', 'Five'] :
+		['One', 'Two', 'Three', 'Four', 'Five', 'Six'];
+
+	frameNumbers.forEach((number, i) => {
+		document.getElementById(`order${number}`).innerText = `${selectedPermutation[i]}${framesInHalf[i] ? ' (Br)' : ''}`;
+	});
+
 	console.log('Done');
 }
