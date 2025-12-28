@@ -85,17 +85,16 @@ function selectRef({ isSecondHalf, one, two, three, four, five, six }, players) 
 	const fullAllocation = initialAllocation.map((initial, index) =>
 		initial ||
 		getInitialsNotAllocatedJoinedUnlessPlayingFrame(initialsNotAllocatedFrame, cannotRefOptions[index]) ||
-		players.filter(player => !cannotRefOptions[index].includes(player.initial)).map(player => player.initial).join('/')
+		selectedPlayers.filter(player => !cannotRefOptions[index].includes(player)).join('/')
 	);
 
-	// Potential TODO: Put this in a forEachLoop
-	document.getElementById('refOne').innerText = `${fullAllocation[0]}${initialAllocation[0] ? ' *' : ''}`;
-	document.getElementById('refTwo').innerText = `${fullAllocation[1]}${initialAllocation[1] ? ' *' : ''}`;
-	document.getElementById('refThree').innerText = `${fullAllocation[2]}${initialAllocation[2] ? ' *' : ''}`;
-	document.getElementById('refFour').innerText = `${fullAllocation[3]}${initialAllocation[3] ? ' *' : ''}`;
-	document.getElementById('refFive').innerText = `${fullAllocation[4]}${initialAllocation[4] ? ' *' : ''}`;
-	if (!isSecondHalf) {
-		document.getElementById('refSix').innerText = `${fullAllocation[5]}${initialAllocation[5] ? ' *' : ''}`;
-	}
+	const frameNumbers = isSecondHalf ?
+		['One', 'Two', 'Three', 'Four', 'Five'] :
+		['One', 'Two', 'Three', 'Four', 'Five', 'Six'];
+
+	frameNumbers.forEach((number, i) => {
+		document.getElementById(`ref${number}`).innerText = `${fullAllocation[i]}${initialAllocation[i] ? ' *' : ''}`;
+	});
+
 	console.log('Done');
 }
