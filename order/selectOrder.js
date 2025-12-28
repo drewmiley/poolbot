@@ -12,7 +12,7 @@ const getHalfPlayers = (players, options) => {
 
 	const reserves = [...Array(options.numberOfReserves).keys()].map(index => {
 		return {
-			initial: `R${i + 1}`,
+			initial: `R${index + 1}`,
 			frameOptions: options.isSecondHalf ? [0, 1, 2, 3, 4] : [0, 1, 2, 3, 4, 5],
 			numberOfBreaks: 0.5
 		}
@@ -23,6 +23,7 @@ const getHalfPlayers = (players, options) => {
 
 const getPlayersAssignedBreaks = (players, frames) => {
 	const playersWithWeighting = players.reduce((acc, player) => {
+		// * 2 is a cheat to get everything to whole numbers, as number of breaks can only be integer or end in .5
 		const playerArray = [...Array(player.numberOfBreaks * 2).keys()].map(_ => player.initial);
 		return acc.concat(playerArray)
 	}, []);
