@@ -2,7 +2,7 @@ const getWantToRefOptions = (playing) => {
 	const middleFrames = playing
 		.map((d, i) => i)
 		.filter(i => i != 0 && i != playing.length - 1);
-	const firstWantToRefOption = [...playing[1].preferenceBefore ? [playing[1]] : []];
+	const firstWantToRefOption = playing[1].preferenceBefore ? [playing[1]] : [];
 	const middleWantsToRefOptions = middleFrames.map(i => {
 		return [
 			...!playing[i - 1].preferenceBefore ? [playing[i - 1]] : [],
@@ -15,7 +15,7 @@ const getWantToRefOptions = (playing) => {
 	// 	[...!playing[2].preferenceBefore ? [playing[2]] : [], ...playing[4].preferenceBefore ? [playing[4]] : []],
 	// 	[...!playing[3].preferenceBefore ? [playing[3]] : [], ...playing[5].preferenceBefore ? [playing[5]] : []],
 	// ];
-	const lastWantsToRefOption = [...!playing[4].preferenceBefore ? [playing[4]] : []];
+	const lastWantsToRefOption = !playing[playing.length - 2].preferenceBefore ? [playing[playing.length - 2]] : [];
 	// TODO: Do depending on size of playing (5/6)
 	// const wantsToRefOptions = [
 	// 	[...playing[1].preferenceBefore ? [playing[1]] : []],
@@ -26,15 +26,18 @@ const getWantToRefOptions = (playing) => {
 	// 	[...!playing[4].preferenceBefore ? [playing[4]] : []]
 	// ];
 	// return wantsToRefOptions;
-	return [...firstWantToRefOption, ...middleWantsToRefOptions, ...lastWantsToRefOption];
+	return [].concat([firstWantToRefOption], middleWantsToRefOptions, [lastWantsToRefOption]);
 }
 
 const getCannotRefOptions = (playing, isSecondHalf) => {
 	const middleFrames = playing
 		.map((d, i) => i)
 		.filter(i => i != 0 && i != playing.length - 1);
-	const firstCannotRefOption = [playing[0].initial, ...!playing[1].preferenceBefore ? [playing[1].initial] : []];
-	const middleWantsToRefOptions = middleFrames.map(i => {
+	const firstCannotRefOption = [
+		playing[0].initial,
+		...!playing[1].preferenceBefore ? [playing[1].initial] : []
+	];
+	const middleCannotRefOptions = middleFrames.map(i => {
 		return [
 			playing[i].initial,
 			...playing[i - 1].preferenceBefore ? [playing[i - 1].initial] : [],
@@ -47,7 +50,10 @@ const getCannotRefOptions = (playing, isSecondHalf) => {
 	// 	[playing[3].initial, ...playing[2].preferenceBefore ? [playing[2].initial] : [], ...!playing[4].preferenceBefore ? [playing[4].initial] : []],
 	// 	[playing[4].initial, ...playing[3].preferenceBefore ? [playing[3].initial] : [], ...!playing[5].preferenceBefore ? [playing[5].initial] : []],
 	// ]
-	const lastCannotRefOption = [playing[5].initial, ...playing[4].preferenceBefore ? [playing[4].initial] : []];
+	const lastCannotRefOption = [
+		playing[playing.length - 1].initial,
+		...playing[playing.length - 2].preferenceBefore ? [playing[playing.length - 2].initial] : []
+	];
 	// TODO: Do depending on size of playing (5/6)
 	// const cannotRefOptions = [
 	// 	[playing[0].initial, ...!playing[1].preferenceBefore ? [playing[1].initial] : []],
@@ -58,7 +64,7 @@ const getCannotRefOptions = (playing, isSecondHalf) => {
 	// 	[playing[5].initial, ...playing[4].preferenceBefore ? [playing[4].initial] : []]
 	// ]
 	// return cannotRefOptions;
-	return [...firstCannotRefOption, ...middleWantsToRefOptions, ...lastWantsToRefOption];
+	return [].concat([firstCannotRefOption], middleCannotRefOptions, [lastCannotRefOption]);
 }
 
 const getInitialAllocation = initialArray => {
