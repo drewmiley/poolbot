@@ -1,4 +1,13 @@
-const getWantToRefOptions = (playing, isSecondHalf) => {
+const getWantToRefOptions = (playing) => {
+	const firstWantToRefOption = [...playing[1].preferenceBefore ? [playing[1]] : []];
+	const middleWantsToRefOptions = [
+		[...!playing[0].preferenceBefore ? [playing[0]] : [], ...playing[2].preferenceBefore ? [playing[2]] : []],
+		[...!playing[1].preferenceBefore ? [playing[1]] : [], ...playing[3].preferenceBefore ? [playing[3]] : []],
+		[...!playing[2].preferenceBefore ? [playing[2]] : [], ...playing[4].preferenceBefore ? [playing[4]] : []],
+		[...!playing[3].preferenceBefore ? [playing[3]] : [], ...playing[5].preferenceBefore ? [playing[5]] : []],
+	];
+	const lastWantsToRefOption = [...!playing[4].preferenceBefore ? [playing[4]] : []];
+	// TODO: Do depending on size of playing (5/6)
 	const wantsToRefOptions = [
 		[...playing[1].preferenceBefore ? [playing[1]] : []],
 		[...!playing[0].preferenceBefore ? [playing[0]] : [], ...playing[2].preferenceBefore ? [playing[2]] : []],
@@ -11,6 +20,15 @@ const getWantToRefOptions = (playing, isSecondHalf) => {
 }
 
 const getCannotRefOptions = (playing, isSecondHalf) => {
+	const firstCannotRefOption = [playing[0].initial, ...!playing[1].preferenceBefore ? [playing[1].initial] : []];
+	const middleCannotRefOptions = [
+		[playing[1].initial, ...playing[0].preferenceBefore ? [playing[0].initial] : [], ...!playing[2].preferenceBefore ? [playing[2].initial] : []],
+		[playing[2].initial, ...playing[1].preferenceBefore ? [playing[1].initial] : [], ...!playing[3].preferenceBefore ? [playing[3].initial] : []],
+		[playing[3].initial, ...playing[2].preferenceBefore ? [playing[2].initial] : [], ...!playing[4].preferenceBefore ? [playing[4].initial] : []],
+		[playing[4].initial, ...playing[3].preferenceBefore ? [playing[3].initial] : [], ...!playing[5].preferenceBefore ? [playing[5].initial] : []],
+	]
+	const lastCannotRefOption = [playing[5].initial, ...playing[4].preferenceBefore ? [playing[4].initial] : []];
+	// TODO: Do depending on size of playing (5/6)
 	const cannotRefOptions = [
 		[playing[0].initial, ...!playing[1].preferenceBefore ? [playing[1].initial] : []],
 		[playing[1].initial, ...playing[0].preferenceBefore ? [playing[0].initial] : [], ...!playing[2].preferenceBefore ? [playing[2].initial] : []],
@@ -58,9 +76,9 @@ function selectRef({ isSecondHalf, one, two, three, four, five, six }, players) 
 	// TODO: Test for error case where same player has been selected
 	const playing = selectedPlayers.map(selected => players.find(player => player.initial == selected));
 
-	const wantsToRefOptions = getWantToRefOptions(playing, isSecondHalf);
+	const wantsToRefOptions = getWantToRefOptions(playing);
 
-	const cannotRefOptions = getCannotRefOptions(playing, isSecondHalf);
+	const cannotRefOptions = getCannotRefOptions(playing);
 
 	const initialAllocation = wantsToRefOptions.map(getInitialAllocation);
 
