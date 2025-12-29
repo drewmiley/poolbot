@@ -21,6 +21,18 @@ const getHalfPlayers = (players, options) => {
 	return halfPlayers.concat(reserves);
 }
 
+const getFramesInHalf = (teamAreAway, isSecondHalf) => {
+	if (teamAreAway && !isSecondHalf) {
+		return [true, false, true, false, true, false];
+	} else if (!teamAreAway && !isSecondHalf) {
+		return [false, true, false, true, false, true];
+	} else if (teamAreAway && isSecondHalf) {
+		return [true, false, true, false, true];
+	} else if (!teamAreAway && isSecondHalf) {
+		return [false, true, false, true, false];
+	}
+}
+
 const getPlayersAssignedBreaks = (players, frames) => {
 	const playersWithWeighting = players.reduce((acc, player) => {
 		// * 2 is a cheat to get everything to whole numbers, as number of breaks can only be integer or end in .5
@@ -82,17 +94,7 @@ function selectOrder(options, players) {
 		return;
 	}
 
-	// TODO: Neater way of writing that 
-	let framesInHalf = [];
-	if (options.teamAreAway && !options.isSecondHalf) {
-		framesInHalf = [true, false, true, false, true, false];
-	} else if (!options.teamAreAway && !options.isSecondHalf) {
-		framesInHalf = [false, true, false, true, false, true];
-	} else if (options.teamAreAway && options.isSecondHalf) {
-		framesInHalf = [true, false, true, false, true];
-	} else if (!options.teamAreAway && options.isSecondHalf) {
-		framesInHalf = [false, true, false, true, false];
-	}
+	const framesInHalf = getFramesInHalf(options.teamAreAway, options.isSecondHalf);
 
 	console.log(halfPlayers);
 	console.log(framesInHalf);
