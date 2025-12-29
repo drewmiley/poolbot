@@ -21,6 +21,18 @@ const getHalfPlayers = (players, options) => {
 	return halfPlayers.concat(reserves);
 }
 
+const getFramesInHalf = (teamAreAway, isSecondHalf) => {
+	if (teamAreAway && !isSecondHalf) {
+		return [true, false, true, false, true, false];
+	} else if (!teamAreAway && !isSecondHalf) {
+		return [false, true, false, true, false, true];
+	} else if (teamAreAway && isSecondHalf) {
+		return [true, false, true, false, true];
+	} else if (!teamAreAway && isSecondHalf) {
+		return [false, true, false, true, false];
+	}
+}
+
 const getPlayersAssignedBreaks = (players, frames) => {
 	const playersWithWeighting = players.reduce((acc, player) => {
 		// * 2 is a cheat to get everything to whole numbers, as number of breaks can only be integer or end in .5
@@ -29,7 +41,6 @@ const getPlayersAssignedBreaks = (players, frames) => {
 	}, []);
 	const numberOfBreaks = frames.filter(hasBreak => hasBreak).length;
 	let breaks = [];
-	// TODO: Can I remove while loop here and use reduce?
 	while (breaks.length < numberOfBreaks) {
 		const remainingPlayersWithWeighting = playersWithWeighting.filter(player => !breaks.includes(player));
 		const index = Math.floor(Math.random() * remainingPlayersWithWeighting.length);
@@ -49,10 +60,14 @@ const getBestFramePermutations = (framePermutation, playersWithBreaksAssigned) =
 }
 
 const selectPermutation = framePermutationsWithScore => {
-	// TODO: MIGHT AS WELL USE IF/ELSE HERE
 	const perfectPermutations = framePermutationsWithScore.filter(perm => perm.perfect);
-	const index = perfectPermutations.length ? Math.floor(Math.random() * perfectPermutations.length) : Math.floor(Math.random() * framePermutationsWithScore.length)
-	return perfectPermutations.length ? perfectPermutations[index].framePermutation : framePermutationsWithScore[index].framePermutation;
+	if (perfectPermutations.length) {
+		const index = Math.floor(Math.random() * perfectPermutations.length);
+		return perfectPermutations[index].framePermutation;
+	} else {
+		const index = Math.floor(Math.random() * framePermutationsWithScore.length);
+		return framePermutationsWithScore[index].framePermutation;
+	}
 }
 
 function clearText() {
@@ -79,17 +94,7 @@ function selectOrder(options, players) {
 		return;
 	}
 
-	// TODO: Neater way of writing that 
-	let framesInHalf = [];
-	if (options.teamAreAway && !options.isSecondHalf) {
-		framesInHalf = [true, false, true, false, true, false];
-	} else if (!options.teamAreAway && !options.isSecondHalf) {
-		framesInHalf = [false, true, false, true, false, true];
-	} else if (options.teamAreAway && options.isSecondHalf) {
-		framesInHalf = [true, false, true, false, true];
-	} else if (!options.teamAreAway && options.isSecondHalf) {
-		framesInHalf = [false, true, false, true, false];
-	}
+	const framesInHalf = getFramesInHalf(options.teamAreAway, options.isSecondHalf);
 
 	console.log(halfPlayers);
 	console.log(framesInHalf);
@@ -108,7 +113,6 @@ function selectOrder(options, players) {
 
 	const allPossibleFramePermuations = permutations(playersWithBreaksAssigned.map(player => player.initial));
 
-// TODO: Replace with reduce so no double-loop
 	const bestFramePermutations = allPossibleFramePermuations
 		.map(framePermuation => getBestFramePermutations(framePermuation, playersWithBreaksAssigned))
 		.filter(framePermuation => framePermuation != null);
@@ -125,14 +129,13 @@ function selectOrder(options, players) {
 	const selectedPermutation = selectPermutation(bestFramePermutations);
 
 	// Potential TODO: Add * if person gets their preference
-	// Potential TODO: Put this in a forEachLoop
-	document.getElementById('orderOne').innerText = `${selectedPermutation[0]}${framesInHalf[0] ? ' (Br)' : ''}`;
-	document.getElementById('orderTwo').innerText = `${selectedPermutation[1]}${framesInHalf[1] ? ' (Br)' : ''}`;
-	document.getElementById('orderThree').innerText = `${selectedPermutation[2]}${framesInHalf[2] ? ' (Br)' : ''}`;
-	document.getElementById('orderFour').innerText = `${selectedPermutation[3]}${framesInHalf[3] ? ' (Br)' : ''}`;
-	document.getElementById('orderFive').innerText = `${selectedPermutation[4]}${framesInHalf[4] ? ' (Br)' : ''}`;
-	if (!options.isSecondHalf) {
-		document.getElementById('orderSix').innerText = `${selectedPermutation[5]}${framesInHalf[5] ? ' (Br)' : ''}`;
-	}
+	const frameNumbers = isSecondHalf ?
+		['One', 'Two', 'Three', 'Four', 'Five'] :
+		['One', 'Two', 'Three', 'Four', 'Five', 'Six'];
+
+	frameNumbers.forEach((number, i) => {
+		document.getElementById(`order${number}`).innerText = `${selectedPermutation[i]}${framesInHalf[i] ? ' (Br)' : ''}`;
+	});
+
 	console.log('Done');
 }

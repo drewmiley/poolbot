@@ -3,18 +3,16 @@ const MIDDLE = "middle";
 const LATE = "late";
 
 const getFrameOptions = (preferences, isSecondHalf) => {
-	// TODO: Clean up this function
-	let arr = [];
-	if (preferences.includes(EARLY)) {
-		arr.push(0, 1);
-	}
-	if (preferences.includes(MIDDLE)) {
-		arr.push(2, 3);
-	}
-	if (preferences.includes(LATE)) {
-		isSecondHalf ? arr.push(4) : arr.push(4, 5);
-	}
-	return arr;
+	return preferences.reduce((acc, preference) => {
+		switch (preference) {
+			case EARLY:
+				return acc.concat([0, 1]);
+			case MIDDLE:
+				return acc.concat([2, 3]);
+			case LATE:
+				return acc.concat(isSecondHalf ? [4] : [4, 5]);
+		}
+	}, []);
 }
 
 const getFirstHalfOptions = firstHalfPreferences => getFrameOptions(firstHalfPreferences, false);
