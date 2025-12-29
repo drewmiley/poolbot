@@ -49,10 +49,14 @@ const getBestFramePermutations = (framePermutation, playersWithBreaksAssigned) =
 }
 
 const selectPermutation = framePermutationsWithScore => {
-	// TODO: MIGHT AS WELL USE IF/ELSE HERE
 	const perfectPermutations = framePermutationsWithScore.filter(perm => perm.perfect);
-	const index = perfectPermutations.length ? Math.floor(Math.random() * perfectPermutations.length) : Math.floor(Math.random() * framePermutationsWithScore.length)
-	return perfectPermutations.length ? perfectPermutations[index].framePermutation : framePermutationsWithScore[index].framePermutation;
+	if (perfectPermutations.length) {
+		const index = Math.floor(Math.random() * perfectPermutations.length);
+		return perfectPermutations[index].framePermutation;
+	} else {
+		const index = Math.floor(Math.random() * framePermutationsWithScore.length);
+		return framePermutationsWithScore[index].framePermutation;
+	}
 }
 
 function clearText() {
