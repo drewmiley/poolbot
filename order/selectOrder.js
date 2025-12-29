@@ -112,7 +112,6 @@ function selectOrder(options, players) {
 
 	const allPossibleFramePermuations = permutations(playersWithBreaksAssigned.map(player => player.initial));
 
-// TODO: Replace with reduce so no double-loop
 	const bestFramePermutations = allPossibleFramePermuations
 		.map(framePermuation => getBestFramePermutations(framePermuation, playersWithBreaksAssigned))
 		.filter(framePermuation => framePermuation != null);
