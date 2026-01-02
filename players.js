@@ -21,8 +21,8 @@ const getFirstHalfOptions = firstHalfPreferences => getFrameOptions(firstHalfPre
 
 const getSecondHalfOptions = secondHalfPreferences => getFrameOptions(secondHalfPreferences, true);
 
-const orderPlayer = (initial, breakPreferences, firstHalfPreferences, secondHalfPreferences) => {
-	const numberOfBreaks = breakPreferences.reduce((acc, val) => acc + val) / breakPreferences.length;
+const orderPlayer = ({ initial, preferredNumberOfBreaks, firstHalfPreferences, secondHalfPreferences }) => {
+	const numberOfBreaks = preferredNumberOfBreaks.reduce((acc, val) => acc + val) / preferredNumberOfBreaks.length;
 	const firstHalfOptions = getFirstHalfOptions(firstHalfPreferences);
 	const secondHalfOptions = getSecondHalfOptions(secondHalfPreferences);
 	return {
@@ -33,39 +33,83 @@ const orderPlayer = (initial, breakPreferences, firstHalfPreferences, secondHalf
 	}
 }
 
-const refPlayer = (initial, preferenceBeforeInit, wouldPreferToRef) => {
+const refPlayer = ({ initial, refPreferenceBeforeInit, wouldPreferToRef }) => {
 	return {
 		initial,
-		preferenceBeforeInit,
-		preferenceBefore: preferenceBeforeInit === null ? Math.random() < 0.5 : preferenceBeforeInit,
+		preferenceBeforeInit: refPreferenceBeforeInit,
+		preferenceBefore: refPreferenceBeforeInit === null ? Math.random() < 0.5 : refPreferenceBeforeInit,
 		wouldPreferToRef
 	}
 }
 
-// TODO: Make this more readable. Set each player individually
+const CC = {
+	initial: 'CC',
+	refPreferenceBeforeInit: null,
+	preferredNumberOfBreaks: [1],
+	firstHalfPreferences: [EARLY, MIDDLE],
+	secondHalfPreferences: [EARLY, MIDDLE]
+};
 
-const orderPlayers = () => [
-	orderPlayer('CC', [1], [EARLY, MIDDLE], [EARLY, MIDDLE]),
-	orderPlayer('DD', [1], [MIDDLE, LATE], [EARLY, MIDDLE]),
-	orderPlayer('DM', [0, 1], [MIDDLE, LATE], [MIDDLE, LATE]),
-	orderPlayer('DW', [1], [EARLY, MIDDLE, LATE], [EARLY, MIDDLE, LATE]),
-	orderPlayer('JC', [0, 1], [MIDDLE], [EARLY]),
-	orderPlayer('ND', [2], [MIDDLE, LATE], [MIDDLE, LATE]),
-	orderPlayer('PC', [1], [EARLY, MIDDLE], [EARLY, MIDDLE, LATE])
-]
+const DD = {
+	initial: 'DD',
+	refPreferenceBeforeInit: false,
+	preferredNumberOfBreaks: [1],
+	firstHalfPreferences: [MIDDLE, LATE],
+	secondHalfPreferences: [EARLY, MIDDLE]
+};
 
-const refPlayers = () => [
-	refPlayer('CC', null),
-	refPlayer('DD', false),
-	refPlayer('DM', false, true),
-	refPlayer('DW', false),
-	refPlayer('JC', true),
-	refPlayer('ND', true, true),
-	refPlayer('PC', true),
-	// TODO: PASS AS ADDITIONAL ARRAY
-	refPlayer('After', false),
-	refPlayer('Before', true),
-	refPlayer('Either', null)
-]
+const DM = {
+	initial: 'DM',
+	refPreferenceBeforeInit: false,
+	wouldPreferToRef: true,
+	preferredNumberOfBreaks: [0, 1],
+	firstHalfPreferences: [MIDDLE, LATE],
+	secondHalfPreferences: [MIDDLE, LATE]
+};
+
+const DW = {
+	initial: 'DW',
+	refPreferenceBeforeInit: false,
+	preferredNumberOfBreaks: [1],
+	firstHalfPreferences: [EARLY, MIDDLE, LATE],
+	secondHalfPreferences: [EARLY, MIDDLE, LATE]
+};
+
+const JC = {
+	initial: 'JC',
+	refPreferenceBeforeInit: true,
+	preferredNumberOfBreaks: [0, 1],
+	firstHalfPreferences: [MIDDLE],
+	secondHalfPreferences: [EARLY]
+};
+
+const ND = {
+	initial: 'ND',
+	refPreferenceBeforeInit: true,
+	wouldPreferToRef: true,
+	preferredNumberOfBreaks: [2],
+	firstHalfPreferences: [MIDDLE, LATE],
+	secondHalfPreferences: [MIDDLE, LATE]
+};
+
+const PC = {
+	initial: 'PC',
+	refPreferenceBeforeInit: true,
+	preferredNumberOfBreaks: [1],
+	firstHalfPreferences: [EARLY, MIDDLE],
+	secondHalfPreferences: [EARLY, MIDDLE, LATE]
+};
+
+const fullListOfPlayers = [CC, DD, DM, DW, JC, ND, PC];
+
+const reserveRefs = [
+	refPlayer({ initial: 'Res. After', refPreferenceBeforeInit: false }),
+	refPlayer({ initial: 'Res. Before', refPreferenceBeforeInit: true }),
+	refPlayer({ initial: 'Res. Either', refPreferenceBeforeInit: null })
+];
+
+const orderPlayers = () => fullListOfPlayers.map(orderPlayer);
+
+const refPlayers = () => fullListOfPlayers.map(refPlayer).concat(reserveRefs);
 
 const fullPlayers = { orderPlayers, refPlayers };
