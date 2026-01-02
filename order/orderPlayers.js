@@ -41,6 +41,19 @@
 // 	player('PC', [1], [EARLY, MIDDLE], [EARLY, MIDDLE, LATE])
 // ]
 
+const getOrderHTML = playerInitial => {
+	const html = "<div>" +
+		`CC` +
+		`Selected: <input type="checkbox" id="ccSelected">` +
+		`Had Break (if 2nd): <input type="checkbox" id="ccHadBreak">` +
+	"</div>"
+	return html;
+}
+
 const players = fullPlayers.orderPlayers;
+
+players.forEach(player => {
+	// TODO: Add ORDER HTML
+})
 
 console.log(players())

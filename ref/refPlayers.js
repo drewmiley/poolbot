@@ -19,6 +19,18 @@
 // 	player('Either', null)
 // ]
 
+const getRefHTML = player => {
+	return `<option value='CC'>` +
+		`CC (Either)` +
+	`</option>`;
+}
+
 const players = fullPlayers.refPlayers;
+
+['one', 'two', 'three', 'four', 'five', 'six'].forEach(index => {
+	players.forEach(player => {
+		// TODO: Add REF HTML
+	})
+})
 
 console.log(players())
