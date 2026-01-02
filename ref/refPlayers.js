@@ -19,7 +19,7 @@ const getRefHTML = player => {
 	`</option>`;
 }
 
-const players = fullPlayers.refPlayers;
+const players = refPlayers;
 
 ['one', 'two', 'three', 'four', 'five', 'six'].forEach(index => {
 	// TODO: CAN I TIDY THIS UP?

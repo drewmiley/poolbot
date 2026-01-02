@@ -8,7 +8,7 @@ const getOrderHTML = playerInitial => {
 	return html;
 }
 
-const players = fullPlayers.orderPlayers;
+const players = orderPlayers;
 
 players().forEach(player => {
 	// TODO: Fix div soup

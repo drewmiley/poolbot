@@ -111,5 +111,3 @@ const reserveRefs = [
 const orderPlayers = () => fullListOfPlayers.map(orderPlayer);
 
 const refPlayers = () => fullListOfPlayers.map(refPlayer).concat(reserveRefs);
-
-const fullPlayers = { orderPlayers, refPlayers };
