@@ -20,3 +20,7 @@ a.button {
     background-color: buttonface;
     text-decoration: none;
 }
+
+#randomResult {
+    font-size: 160px;
+}
