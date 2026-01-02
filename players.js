@@ -54,7 +54,6 @@ const orderPlayers = () => [
 	orderPlayer('PC', [1], [EARLY, MIDDLE], [EARLY, MIDDLE, LATE])
 ]
 
-// TODO: Return preferenceSuffix as part of this
 const refPlayers = () => [
 	refPlayer('CC', null),
 	refPlayer('DD', false),

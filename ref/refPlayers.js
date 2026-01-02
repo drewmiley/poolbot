@@ -1,24 +1,3 @@
-// const player = (initial, preferenceBeforeInit, wouldPreferToRef) => {
-// 	return {
-// 		initial,
-// 		preferenceBefore: preferenceBeforeInit === null ? Math.random() < 0.5 : preferenceBeforeInit,
-// 		wouldPreferToRef
-// 	}
-// }
-
-// const players = () => [
-// 	player('CC', null),
-// 	player('DD', false),
-// 	player('DM', false, true),
-// 	player('DW', false),
-// 	player('JC', true),
-// 	player('ND', true, true),
-// 	player('PC', true),
-// 	player('After', false),
-// 	player('Before', true),
-// 	player('Either', null)
-// ]
-
 const getPreferenceSuffix = preferenceBeforeInit => {
 	if (preferenceBeforeInit === null) {
 		return "(Either)";
@@ -40,12 +19,6 @@ const getRefHTML = player => {
 	`</option>`;
 }
 
-const getReservesRefHTML = () => {
-	return "<option value=\"After\">After (A)</option>" +
-		"<option value=\"Before\">Before (B)</option>" +
-		"<option value=\"Either\">Either (E)</option>"
-}
-
 const players = fullPlayers.refPlayers;
 
 ['one', 'two', 'three', 'four', 'five', 'six'].forEach(index => {
@@ -59,8 +32,6 @@ const players = fullPlayers.refPlayers;
 	players().forEach(player => {
 		innerHTML += getRefHTML(player);
 	})
-	// TODO: Remove reserves
-	// innerHTML += getReservesRefHTML();
 	innerHTML += "</select>";
 	newRefOption.innerHTML = innerHTML;
 	container.append(newRefOption);
