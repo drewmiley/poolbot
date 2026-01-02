@@ -39,7 +39,7 @@ const getRefHTML = player => {
 const players = fullPlayers.refPlayers;
 
 ['one', 'two', 'three', 'four', 'five', 'six'].forEach(index => {
-	players.forEach(player => {
+	players().forEach(player => {
 		// TODO: Add REF HTML
 	})
 })
