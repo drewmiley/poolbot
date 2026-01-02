@@ -36,6 +36,7 @@ const orderPlayer = (initial, breakPreferences, firstHalfPreferences, secondHalf
 const refPlayer = (initial, preferenceBeforeInit, wouldPreferToRef) => {
 	return {
 		initial,
+		preferenceBeforeInit,
 		preferenceBefore: preferenceBeforeInit === null ? Math.random() < 0.5 : preferenceBeforeInit,
 		wouldPreferToRef
 	}
@@ -53,6 +54,7 @@ const orderPlayers = () => [
 	orderPlayer('PC', [1], [EARLY, MIDDLE], [EARLY, MIDDLE, LATE])
 ]
 
+// TODO: Return preferenceSuffix as part of this
 const refPlayers = () => [
 	refPlayer('CC', null),
 	refPlayer('DD', false),
@@ -61,6 +63,7 @@ const refPlayers = () => [
 	refPlayer('JC', true),
 	refPlayer('ND', true, true),
 	refPlayer('PC', true),
+	// TODO: PASS AS ADDITIONAL ARRAY
 	refPlayer('After', false),
 	refPlayer('Before', true),
 	refPlayer('Either', null)
