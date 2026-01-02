@@ -42,11 +42,12 @@
 // ]
 
 const getOrderHTML = playerInitial => {
+	const lowerCaseInitial = playerInitial.toLowerCase();
 	const html = "<div>" +
-		`CC` +
-		`Selected: <input type="checkbox" id="ccSelected">` +
-		`Had Break (if 2nd): <input type="checkbox" id="ccHadBreak">` +
-	"</div>"
+		`${playerInitial}` +
+		`Selected: <input type="checkbox" id="${lowerCaseInitial}Selected">` +
+		`Had Break (if 2nd): <input type="checkbox" id="${lowerCaseInitial}HadBreak">` +
+	"</div>";
 	return html;
 }
 

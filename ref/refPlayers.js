@@ -19,9 +19,20 @@
 // 	player('Either', null)
 // ]
 
+const getPreferenceSuffix = preferenceBefore => {
+	if (preferenceBefore === null) {
+		return "(Either)";
+	} else if (preferenceBefore === false) {
+		return "(A)";
+	} else if (preferenceBefore === true) {
+		return "(B)";
+	}
+}
+
 const getRefHTML = player => {
-	return `<option value='CC'>` +
-		`CC (Either)` +
+	const preferenceSuffix = getPreferenceSuffix(player.preferenceBefore);
+	return `<option value="${player.initial}">` +
+		`${player.initial} ${preferenceSuffix}` +
 	`</option>`;
 }
 
