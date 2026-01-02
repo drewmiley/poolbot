@@ -9,6 +9,6 @@ const run = () => {
     console.log('Running');
     const max = parseInt(getSelectedValue('number'));
     const result = Math.ceil(Math.random() * max);
-	document.getElementById('result').innerText = result;
+	document.getElementById('randomResult').innerText = result;
 	console.log('Done');
 }
