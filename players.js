@@ -41,6 +41,8 @@ const refPlayer = (initial, preferenceBeforeInit, wouldPreferToRef) => {
 	}
 }
 
+// TODO: Make this more readable. Set each player individually
+
 const orderPlayers = () => [
 	orderPlayer('CC', [1], [EARLY, MIDDLE], [EARLY, MIDDLE]),
 	orderPlayer('DD', [1], [MIDDLE, LATE], [EARLY, MIDDLE]),
