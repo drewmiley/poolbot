@@ -129,7 +129,7 @@ function selectOrder(options, players) {
 	const selectedPermutation = selectPermutation(bestFramePermutations);
 
 	// Potential TODO: Add * if person gets their preference
-	const frameNumbers = isSecondHalf ?
+	const frameNumbers = options.isSecondHalf ?
 		['One', 'Two', 'Three', 'Four', 'Five'] :
 		['One', 'Two', 'Three', 'Four', 'Five', 'Six'];
 
