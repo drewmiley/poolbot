@@ -22,17 +22,14 @@ const getRefHTML = player => {
 const players = refPlayers;
 
 ['one', 'two', 'three', 'four', 'five', 'six'].forEach(index => {
-	// TODO: CAN I TIDY THIS UP?
 	const container = document.getElementById("selectors");
 	let newRefOption = document.createElement("div");
-	let innerHTML = "";
-	innerHTML += `${index.toUpperCase()} `;
-	innerHTML += `<select name="${index}" id="${index}">`;
-	innerHTML += getEmptyRefHTML();
-	players().forEach(player => {
-		innerHTML += getRefHTML(player);
-	})
-	innerHTML += "</select>";
+	const refOptions = players().map(getRefHTML);
+	const innerHTML = `${index.toUpperCase()} ` +
+		`<select name="${index}" id="${index}">` +
+		getEmptyRefHTML() +
+		refOptions +
+		"</select>";
 	newRefOption.innerHTML = innerHTML;
 	container.append(newRefOption);
 })
