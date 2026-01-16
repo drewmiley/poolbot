@@ -10,9 +10,9 @@ const getFrameOptions = (preferences, isSecondHalf) => {
 			case EARLY:
 				return acc.concat([0, 1]);
 			case MIDDLE:
-				return acc.concat([2, 3]);
+				return acc.concat(isSecondHalf? [2]: [2, 3]);
 			case LATE:
-				return acc.concat(isSecondHalf ? [4] : [4, 5]);
+				return acc.concat(isSecondHalf ? [3, 4] : [4, 5]);
 		}
 	}, []);
 }
