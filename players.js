@@ -88,8 +88,8 @@ const ND = {
 	refPreferenceBeforeInit: true,
 	wouldPreferToRef: true,
 	preferredNumberOfBreaks: [2],
-	firstHalfPreferences: [MIDDLE, LATE],
-	secondHalfPreferences: [MIDDLE, LATE]
+	firstHalfPreferences: [EARLY, MIDDLE],
+	secondHalfPreferences: [EARLY]
 };
 
 const PC = {
