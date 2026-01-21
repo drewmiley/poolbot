@@ -1,4 +1,6 @@
-document.getElementById('run').onclick = () => run();
+document.getElementById('run').onclick = () => run(false);
+
+document.getElementById('runWithRef').onclick = () => run(true);
 
 const getSelectedValue = (id) => {
 	const e = document.getElementById(id);
@@ -17,7 +19,7 @@ const getSelectedOrderParams = (id) => {
     }
 }
 
-const run = () => {
+const run = (withRef) => {
     console.log('Running');
     const options = {
         teamAreAway: getSelectedCheckbox('teamAreAway'),
@@ -32,5 +34,5 @@ const run = () => {
     	numberOfReserves: parseInt(getSelectedValue('numberOfReserves'))
     }
     const team = orderPlayers();
-    selectOrder(options, team);
+    selectOrder(options, team, withRef);
 }
