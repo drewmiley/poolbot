@@ -19,12 +19,10 @@ const getRefHTML = player => {
 	`</option>`;
 }
 
-const players = refPlayers;
-
 ['one', 'two', 'three', 'four', 'five', 'six'].forEach(index => {
 	const container = document.getElementById("selectors");
 	let newRefOption = document.createElement("div");
-	const refOptions = players().map(getRefHTML);
+	const refOptions = refPlayers().map(getRefHTML);
 	const innerHTML = `${index.toUpperCase()} ` +
 		`<select name="${index}" id="${index}">` +
 		getEmptyRefHTML() +
@@ -34,4 +32,4 @@ const players = refPlayers;
 	container.append(newRefOption);
 })
 
-console.log(players())
+console.log(refPlayers())
