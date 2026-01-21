@@ -70,6 +70,11 @@ const selectPermutation = framePermutationsWithScore => {
 	}
 }
 
+const getRefOrderFromSelectedPermutation = selectedPermutation => {
+	const permutation = selectedPermutation;
+	return permutation;
+}
+
 function clearText() {
 	document.getElementById('errorText').innerText = '';
 	['One', 'Two', 'Three', 'Four', 'Five', 'Six'].forEach(number => {
@@ -129,6 +134,9 @@ function selectOrder(options, players) {
 	const frameNumbers = options.isSecondHalf ?
 		['One', 'Two', 'Three', 'Four', 'Five'] :
 		['One', 'Two', 'Three', 'Four', 'Five', 'Six'];
+
+	const refOrder = options.numberOfReserves ? null : getRefOrderFromSelectedPermutation(selectedPermutation);
+	console.log(refOrder);
 
 	frameNumbers.forEach((number, i) => {
 		document.getElementById(`orderTable${number}`).innerText = `${selectedPermutation[i]}${framesInHalf[i] ? ' (Br)' : ''}`;
