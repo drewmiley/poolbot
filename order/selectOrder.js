@@ -70,9 +70,25 @@ const selectPermutation = framePermutationsWithScore => {
 	}
 }
 
-const getRefOrderFromSelectedPermutation = selectedPermutation => {
-	const permutation = selectedPermutation;
-	return permutation;
+const getRefOrderFromSelectedPermutation = (selectedPermutation, isSecondHalf) => {
+	const refOptions = isSecondHalf ? {
+		isSecondHalf: true,
+		one: selectedPermutation[0],
+		two: selectedPermutation[1],
+		three: selectedPermutation[2],
+		four: selectedPermutation[3],
+		five: selectedPermutation[4]
+	} : {
+		isSecondHalf: false,
+		one: selectedPermutation[0],
+		two: selectedPermutation[1],
+		three: selectedPermutation[2],
+		four: selectedPermutation[3],
+		five: selectedPermutation[4],
+		six: selectedPermutation[5]
+	}
+	const refOrder = selectRef(refOptions, refPlayers(), render = false);
+	return refOrder;
 }
 
 function clearText() {
@@ -82,7 +98,7 @@ function clearText() {
 	})
 }
 
-function selectOrder(options, players) {
+function selectOrder(options, players, withRef) {
 	clearText();
 
 	console.log("SELECT ORDER");
@@ -135,12 +151,22 @@ function selectOrder(options, players) {
 		['One', 'Two', 'Three', 'Four', 'Five'] :
 		['One', 'Two', 'Three', 'Four', 'Five', 'Six'];
 
-	const refOrder = options.numberOfReserves ? null : getRefOrderFromSelectedPermutation(selectedPermutation);
+	const refOrder = options.numberOfReserves ? null : getRefOrderFromSelectedPermutation(selectedPermutation, options.isSecondHalf);
 	console.log(refOrder);
 
-	frameNumbers.forEach((number, i) => {
-		document.getElementById(`orderTable${number}`).innerText = `${selectedPermutation[i]}${framesInHalf[i] ? ' (Br)' : ''}`;
-	});
+	if (!options.numberOfReserves && withRef) {
+		const refOrder = getRefOrderFromSelectedPermutation(selectedPermutation);
+		console.log(refOrder);
+
+		frameNumbers.forEach((number, i) => {
+			document.getElementById(`orderTable${number}`).innerHTML = `<b>${selectedPermutation[i]}</b> ${refOrder[i]}${framesInHalf[i] ? ' (Br)' : ''}`;
+		});
+
+	} else {
+		frameNumbers.forEach((number, i) => {
+			document.getElementById(`orderTable${number}`).innerText = `${selectedPermutation[i]}${framesInHalf[i] ? ' (Br)' : ''}`;
+		});
+	}
 
 	console.log('Done');
 }

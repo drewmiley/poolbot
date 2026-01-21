@@ -55,8 +55,8 @@ function clearText() {
 	document.getElementById('refSix').innerText = '';
 }	
 
-function selectRef({ isSecondHalf, one, two, three, four, five, six }, players) {
-	clearText();
+function selectRef({ isSecondHalf, one, two, three, four, five, six }, players, render = true) {
+	if (render) clearText();
 
 	if (!one || !two || !three || !four || !five || (!six && !isSecondHalf)) {
 		document.getElementById('errorText').innerText = 'Wrong number of players selected - please modify options';
@@ -92,9 +92,17 @@ function selectRef({ isSecondHalf, one, two, three, four, five, six }, players) 
 		['One', 'Two', 'Three', 'Four', 'Five'] :
 		['One', 'Two', 'Three', 'Four', 'Five', 'Six'];
 
-	frameNumbers.forEach((number, i) => {
-		document.getElementById(`ref${number}`).innerText = `${fullAllocation[i]}${initialAllocation[i] ? ' *' : ''}`;
-	});
+	const value = selectedPlayers.map((number, i) => {
+		return `${fullAllocation[i]}${initialAllocation[i] ? ' *' : ''}`;
+	})
+
+	if (render) {
+		frameNumbers.forEach((number, i) => {
+			document.getElementById(`ref${number}`).innerText = `${fullAllocation[i]}${initialAllocation[i] ? ' *' : ''}`;
+		});
+	} else {
+		return value;
+	}
 
 	console.log('Done');
 }
