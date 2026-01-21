@@ -31,6 +31,6 @@ const run = () => {
         pc: getSelectedOrderParams('pc'),
     	numberOfReserves: parseInt(getSelectedValue('numberOfReserves'))
     }
-    const team = players();
+    const team = orderPlayers();
     selectOrder(options, team);
 }
