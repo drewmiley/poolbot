@@ -24,7 +24,7 @@ const run = () => {
         isSecondHalf: getSelectedCheckbox('isSecondHalf'),
         numberOfReserves: parseInt(getSelectedValue('numberOfReserves'))
     }
-    const team = players();
+    const team = orderPlayers();
     const options = team
         .map(player => player.initial.toLowerCase())
         .reduce((accOptions, playerInitial) => (
