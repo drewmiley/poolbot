@@ -19,32 +19,18 @@ const getSelectedOrderParams = (id) => {
 
 const run = () => {
     console.log('Running');
-    // TODO: Add programmatic setting of players, inc. gp/GP.
-    // TODO: Can i refactor this, probably using spread operator.
     const team = players();
-    const teamInitials = team.map(player => player.initial);
     const initialOptions = {
         teamAreAway: getSelectedCheckbox('teamAreAway'),
         isSecondHalf: getSelectedCheckbox('isSecondHalf'),
         numberOfReserves: parseInt(getSelectedValue('numberOfReserves'))
     }
-    const options = teamInitials.reduce((accOptions, playerInitial) => {
-        const playerInitialToLowerCase = playerInitial.toLowerCase();
-        accOptions[playerInitialToLowerCase] = getSelectedOrderParams(playerInitialToLowerCase);
-        return accOptions;
-    }, initialOptions);
-    // const options = {
-    //     teamAreAway: getSelectedCheckbox('teamAreAway'),
-    //     isSecondHalf: getSelectedCheckbox('isSecondHalf'),
-    // 	cc: getSelectedOrderParams('cc'),
-    //     dd: getSelectedOrderParams('dd'),
-    //     dm: getSelectedOrderParams('dm'),
-    //     dw: getSelectedOrderParams('dw'),
-    //     jc: getSelectedOrderParams('jc'),
-    //     nd: getSelectedOrderParams('nd'),
-    //     pc: getSelectedOrderParams('pc'),
-    // 	numberOfReserves: parseInt(getSelectedValue('numberOfReserves'))
-    // }
-    // const team = players();
+    const options = team
+        .map(player => player.initial.toLowerCase())
+        // TODO: Can i refactor this, probably using spread operator.
+        .reduce((accOptions, playerInitial) => {
+            accOptions[playerInitial] = getSelectedOrderParams(playerInitial);
+            return accOptions;
+        }, initialOptions);
     selectOrder(options, team);
 }
