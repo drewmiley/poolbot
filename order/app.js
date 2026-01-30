@@ -19,6 +19,7 @@ const getSelectedOrderParams = (id) => {
 
 const run = () => {
     console.log('Running');
+    // TODO: Add programmatic setting of players, inc. gp/GP. Probably using spread operator.
     const options = {
         teamAreAway: getSelectedCheckbox('teamAreAway'),
         isSecondHalf: getSelectedCheckbox('isSecondHalf'),
