@@ -19,18 +19,16 @@ const getSelectedOrderParams = (id) => {
 
 const run = () => {
     console.log('Running');
-    const team = players();
     const initialOptions = {
         teamAreAway: getSelectedCheckbox('teamAreAway'),
         isSecondHalf: getSelectedCheckbox('isSecondHalf'),
         numberOfReserves: parseInt(getSelectedValue('numberOfReserves'))
     }
+    const team = players();
     const options = team
         .map(player => player.initial.toLowerCase())
-        // TODO: Can i refactor this, probably using spread operator.
-        .reduce((accOptions, playerInitial) => {
-            accOptions[playerInitial] = getSelectedOrderParams(playerInitial);
-            return accOptions;
-        }, initialOptions);
+        .reduce((accOptions, playerInitial) => (
+            { ...accOptions, [playerInitial]: getSelectedOrderParams(playerInitial) }
+        ), initialOptions);
     selectOrder(options, team);
 }
