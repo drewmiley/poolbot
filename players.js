@@ -75,6 +75,14 @@ const DW = {
 	secondHalfPreferences: [EARLY, MIDDLE, LATE]
 };
 
+const GP = {
+	initial: 'GP',
+	refPreferenceBeforeInit: null,
+	preferredNumberOfBreaks: [1],
+	firstHalfPreferences: [EARLY],
+	secondHalfPreferences: [EARLY]
+};
+
 const JC = {
 	initial: 'JC',
 	refPreferenceBeforeInit: true,
@@ -100,7 +108,7 @@ const PC = {
 	secondHalfPreferences: [EARLY, MIDDLE, LATE]
 };
 
-const fullListOfPlayers = [CC, DD, DM, DW, JC, ND, PC];
+const fullListOfPlayers = [CC, DD, DM, DW, GP, JC, ND, PC];
 
 const reserveRefs = [
 	refPlayer({ initial: 'Res. After', refPreferenceBeforeInit: false }),

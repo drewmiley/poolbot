@@ -19,18 +19,16 @@ const getSelectedOrderParams = (id) => {
 
 const run = () => {
     console.log('Running');
-    const options = {
+    const initialOptions = {
         teamAreAway: getSelectedCheckbox('teamAreAway'),
         isSecondHalf: getSelectedCheckbox('isSecondHalf'),
-    	cc: getSelectedOrderParams('cc'),
-        dd: getSelectedOrderParams('dd'),
-        dm: getSelectedOrderParams('dm'),
-        dw: getSelectedOrderParams('dw'),
-        jc: getSelectedOrderParams('jc'),
-        nd: getSelectedOrderParams('nd'),
-        pc: getSelectedOrderParams('pc'),
-    	numberOfReserves: parseInt(getSelectedValue('numberOfReserves'))
+        numberOfReserves: parseInt(getSelectedValue('numberOfReserves'))
     }
     const team = players();
+    const options = team
+        .map(player => player.initial.toLowerCase())
+        .reduce((accOptions, playerInitial) => (
+            { ...accOptions, [playerInitial]: getSelectedOrderParams(playerInitial) }
+        ), initialOptions);
     selectOrder(options, team);
 }
