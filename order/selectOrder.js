@@ -76,7 +76,11 @@ function clearTableValues() {
 }
 
 function displayTableValues(frameNumbers, selectedPermutation, framesInHalf) {
-	// TODO: Implement
+	const tdElements = document.getElementsByTagName("td");
+	[...Array(frameNumbers.length).keys()].forEach(i => {
+		tdElements[2 * i].innerText = selectedPermutation[i];
+		tdElements[2 * i + 1].innerText = framesInHalf[i] ? ' (Br)' : '';
+	});
 }
 
 function clearText() {
