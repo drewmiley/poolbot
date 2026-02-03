@@ -70,6 +70,14 @@ const selectPermutation = framePermutationsWithScore => {
 	}
 }
 
+function clearTableValues() {
+	// TODO: Implement
+}
+
+function displayTableValues(frameNumbers, selectedPermutation, framesInHalf) {
+	// TODO: Implement
+}
+
 function clearText() {
 	document.getElementById('errorText').innerText = '';
 	document.getElementById('orderOne').innerText = '';
@@ -78,6 +86,7 @@ function clearText() {
 	document.getElementById('orderFour').innerText = '';
 	document.getElementById('orderFive').innerText = '';
 	document.getElementById('orderSix').innerText = '';
+	clearTableValues();
 }
 
 function selectOrder(options, players) {
@@ -136,6 +145,8 @@ function selectOrder(options, players) {
 	frameNumbers.forEach((number, i) => {
 		document.getElementById(`order${number}`).innerText = `${selectedPermutation[i]}${framesInHalf[i] ? ' (Br)' : ''}`;
 	});
+
+	displayTableValues(frameNumbers, selectedPermutation, framesInHalf);
 
 	console.log('Done');
 }
