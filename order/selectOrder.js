@@ -71,7 +71,8 @@ const selectPermutation = framePermutationsWithScore => {
 }
 
 function clearTableValues() {
-	// TODO: Implement
+	const tdElements = document.getElementsByTagName("td");
+	[...Array(tdElements.length).keys()].forEach(i => tdElements[i].innerText = "");
 }
 
 function displayTableValues(frameNumbers, selectedPermutation, framesInHalf) {
