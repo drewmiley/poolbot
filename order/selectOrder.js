@@ -85,12 +85,17 @@ function displayTableValues(frameNumbers, selectedPermutation, framesInHalf) {
 
 function clearText() {
 	document.getElementById('errorText').innerText = '';
-	document.getElementById('orderOne').innerText = '';
-	document.getElementById('orderTwo').innerText = '';
-	document.getElementById('orderThree').innerText = '';
-	document.getElementById('orderFour').innerText = '';
-	document.getElementById('orderFive').innerText = '';
-	document.getElementById('orderSix').innerText = '';
+	['One', 'Two', 'Three', 'Four', 'Five', 'Six'].forEach(number => {
+		document.getElementById(`order${number}`).innerText = '';
+		document.getElementById(`orderTable${number}`).innerText = '';
+	})
+	// document.getElementById('orderOne').innerText = '';
+	// document.getElementById('orderTwo').innerText = '';
+	// document.getElementById('orderThree').innerText = '';
+	// document.getElementById('orderFour').innerText = '';
+	// document.getElementById('orderFive').innerText = '';
+	// document.getElementById('orderSix').innerText = '';
+
 	clearTableValues();
 }
 
@@ -149,6 +154,7 @@ function selectOrder(options, players) {
 
 	frameNumbers.forEach((number, i) => {
 		document.getElementById(`order${number}`).innerText = `${selectedPermutation[i]}${framesInHalf[i] ? ' (Br)' : ''}`;
+		document.getElementById(`orderTable${number}`).innerText = `${selectedPermutation[i]}${framesInHalf[i] ? ' (Br)' : ''}`;
 	});
 
 	displayTableValues(frameNumbers, selectedPermutation, framesInHalf);
