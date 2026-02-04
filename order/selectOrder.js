@@ -71,6 +71,7 @@ const selectPermutation = framePermutationsWithScore => {
 }
 
 const getRefOrderFromSelectedPermutation = (selectedPermutation, isSecondHalf) => {
+	// TODO: Rewrite this in a neater way
 	const refOptions = isSecondHalf ? {
 		isSecondHalf: true,
 		one: selectedPermutation[0],
@@ -98,6 +99,7 @@ function clearText() {
 	})
 }
 
+// TODO: Pull out calculateOrderValues function as part of selectOrder
 function selectOrder(options, players, withRef) {
 	clearText();
 
@@ -159,6 +161,7 @@ function selectOrder(options, players, withRef) {
 		console.log(refOrder);
 
 		frameNumbers.forEach((number, i) => {
+			// TODO: Correct this using refTable${number}
 			document.getElementById(`orderTable${number}`).innerHTML = `<b>${selectedPermutation[i]}</b> ${refOrder[i]}${framesInHalf[i] ? ' (Br)' : ''}`;
 		});
 

@@ -55,6 +55,7 @@ function clearText() {
 	document.getElementById('refSix').innerText = '';
 }	
 
+// TODO: Pull out calculateRefValues function as part of selectRef
 function selectRef({ isSecondHalf, one, two, three, four, five, six }, players, render = true) {
 	if (render) clearText();
 
