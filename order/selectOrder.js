@@ -70,8 +70,15 @@ const selectPermutation = framePermutationsWithScore => {
 	}
 }
 
-const getRefOrderFromSelectedPermutation = (selectedPermutation, isSecondHalf) => {
-	// TODO: Rewrite this in a neater way
+const getRefOrderFromSelectedPermutation = (selectedPermutation, isSecondHalf, frameNumbers) => {
+	const frameNumbersWithLowerCase = frameNumbers.map(number => number.toLowerCase());
+		// TODO: Rewrite this in a neater way
+	// TODO: Use similar approach to below
+	    // const options = team
+        // .map(player => player.initial.toLowerCase())
+        // .reduce((accOptions, playerInitial) => (
+        //     { ...accOptions, [playerInitial]: getSelectedOrderParams(playerInitial) }
+        // ), initialOptions);
 	const refOptions = isSecondHalf ? {
 		isSecondHalf: true,
 		one: selectedPermutation[0],
@@ -153,7 +160,7 @@ function selectOrder(options, players, withRef) {
 		['One', 'Two', 'Three', 'Four', 'Five'] :
 		['One', 'Two', 'Three', 'Four', 'Five', 'Six'];
 
-	const refOrder = options.numberOfReserves ? null : getRefOrderFromSelectedPermutation(selectedPermutation, options.isSecondHalf);
+	const refOrder = options.numberOfReserves ? null : getRefOrderFromSelectedPermutation(selectedPermutation, options.isSecondHalf, frameNumbers);
 	console.log(refOrder);
 
 	if (!options.numberOfReserves && withRef) {
