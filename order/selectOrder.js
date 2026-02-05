@@ -106,7 +106,6 @@ function clearText() {
 	})
 }
 
-// TODO: Pull out calculateOrderValues function as part of selectOrder
 function selectOrder(options, players, withRef) {
 	clearText();
 
@@ -114,6 +113,34 @@ function selectOrder(options, players, withRef) {
 	console.log(options);
 	console.log(players);
 
+	const framesInHalf = getFramesInHalf(options.teamAreAway, options.isSecondHalf);
+
+	const selectedPermutation = calculateOrderValues(options, players, framesInHalf);
+
+	// Potential TODO: Add * if person gets their preference
+	const frameNumbers = options.isSecondHalf ?
+		['One', 'Two', 'Three', 'Four', 'Five'] :
+		['One', 'Two', 'Three', 'Four', 'Five', 'Six'];
+
+	const refOrder = options.numberOfReserves ? null : getRefOrderFromSelectedPermutation(selectedPermutation, options.isSecondHalf, frameNumbers);
+	console.log(refOrder);
+
+	if (!options.numberOfReserves && withRef) {
+		frameNumbers.forEach((number, i) => {
+			// TODO: Correct this using refTable${number}
+			document.getElementById(`orderTable${number}`).innerHTML = `<b>${selectedPermutation[i]}</b> ${refOrder[i]}${framesInHalf[i] ? ' (Br)' : ''}`;
+		});
+
+	} else {
+		frameNumbers.forEach((number, i) => {
+			document.getElementById(`orderTable${number}`).innerText = `${selectedPermutation[i]}${framesInHalf[i] ? ' (Br)' : ''}`;
+		});
+	}
+
+	console.log('Done');
+}
+
+function calculateOrderValues(options, players, framesInHalf) {
 	const halfPlayers = getHalfPlayers(players, options);
 
 	if (halfPlayers.length != (options.isSecondHalf ? 5 : 6)) {
@@ -121,10 +148,7 @@ function selectOrder(options, players, withRef) {
 		return;
 	}
 
-	const framesInHalf = getFramesInHalf(options.teamAreAway, options.isSecondHalf);
-
 	console.log(halfPlayers);
-	console.log(framesInHalf);
 
 	const playersAssignedBreaks = getPlayersAssignedBreaks(halfPlayers, framesInHalf);
 
@@ -153,27 +177,5 @@ function selectOrder(options, players, withRef) {
 		return;
 	}
 
-	const selectedPermutation = selectPermutation(bestFramePermutations);
-
-	// Potential TODO: Add * if person gets their preference
-	const frameNumbers = options.isSecondHalf ?
-		['One', 'Two', 'Three', 'Four', 'Five'] :
-		['One', 'Two', 'Three', 'Four', 'Five', 'Six'];
-
-	const refOrder = options.numberOfReserves ? null : getRefOrderFromSelectedPermutation(selectedPermutation, options.isSecondHalf, frameNumbers);
-	console.log(refOrder);
-
-	if (!options.numberOfReserves && withRef) {
-		frameNumbers.forEach((number, i) => {
-			// TODO: Correct this using refTable${number}
-			document.getElementById(`orderTable${number}`).innerHTML = `<b>${selectedPermutation[i]}</b> ${refOrder[i]}${framesInHalf[i] ? ' (Br)' : ''}`;
-		});
-
-	} else {
-		frameNumbers.forEach((number, i) => {
-			document.getElementById(`orderTable${number}`).innerText = `${selectedPermutation[i]}${framesInHalf[i] ? ' (Br)' : ''}`;
-		});
-	}
-
-	console.log('Done');
+	return selectPermutation(bestFramePermutations);
 }
