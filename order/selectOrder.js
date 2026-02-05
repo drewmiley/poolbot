@@ -103,6 +103,7 @@ function clearText() {
 	document.getElementById('errorText').innerText = '';
 	['One', 'Two', 'Three', 'Four', 'Five', 'Six'].forEach(number => {
 		document.getElementById(`orderTable${number}`).innerText = '';
+		document.getElementById(`refTable${number}`).innerText = '';
 	})
 }
 
@@ -127,8 +128,8 @@ function selectOrder(options, players, withRef) {
 
 	if (refOrder) {
 		frameNumbers.forEach((number, i) => {
-			// TODO: Correct this using refTable${number}
-			document.getElementById(`orderTable${number}`).innerHTML = `<b>${selectedPermutation[i]}</b> ${refOrder[i]}${framesInHalf[i] ? ' (Br)' : ''}`;
+			document.getElementById(`orderTable${number}`).innerText = `${selectedPermutation[i]}${framesInHalf[i] ? ' (Br)' : ''}`;
+			document.getElementById(`refTable${number}`).innerText = refOrder[i];
 		});
 
 	} else {
