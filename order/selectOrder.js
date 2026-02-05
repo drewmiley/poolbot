@@ -122,10 +122,10 @@ function selectOrder(options, players, withRef) {
 		['One', 'Two', 'Three', 'Four', 'Five'] :
 		['One', 'Two', 'Three', 'Four', 'Five', 'Six'];
 
-	const refOrder = options.numberOfReserves ? null : getRefOrderFromSelectedPermutation(selectedPermutation, options.isSecondHalf, frameNumbers);
+	const refOrder = !options.numberOfReserves && withRef ? getRefOrderFromSelectedPermutation(selectedPermutation, options.isSecondHalf, frameNumbers) : null;
 	console.log(refOrder);
 
-	if (!options.numberOfReserves && withRef) {
+	if (refOrder) {
 		frameNumbers.forEach((number, i) => {
 			// TODO: Correct this using refTable${number}
 			document.getElementById(`orderTable${number}`).innerHTML = `<b>${selectedPermutation[i]}</b> ${refOrder[i]}${framesInHalf[i] ? ' (Br)' : ''}`;
