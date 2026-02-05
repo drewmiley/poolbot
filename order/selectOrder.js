@@ -71,32 +71,12 @@ const selectPermutation = framePermutationsWithScore => {
 }
 
 const getRefOrderFromSelectedPermutation = (selectedPermutation, isSecondHalf, frameNumbers) => {
-	const frameNumbersWithLowerCase = frameNumbers.map(number => number.toLowerCase());
-		// TODO: Rewrite this in a neater way
-	// TODO: Use similar approach to below
-	    // const options = team
-        // .map(player => player.initial.toLowerCase())
-        // .reduce((accOptions, playerInitial) => (
-        //     { ...accOptions, [playerInitial]: getSelectedOrderParams(playerInitial) }
-        // ), initialOptions);
-	const refOptions = isSecondHalf ? {
-		isSecondHalf: true,
-		one: selectedPermutation[0],
-		two: selectedPermutation[1],
-		three: selectedPermutation[2],
-		four: selectedPermutation[3],
-		five: selectedPermutation[4]
-	} : {
-		isSecondHalf: false,
-		one: selectedPermutation[0],
-		two: selectedPermutation[1],
-		three: selectedPermutation[2],
-		four: selectedPermutation[3],
-		five: selectedPermutation[4],
-		six: selectedPermutation[5]
-	}
-	const refOrder = calculateRefValues(refOptions, refPlayers());
-	return refOrder;
+	const refOptions = frameNumbers
+		.map(number => number.toLowerCase())
+        .reduce((accOptions, frameNumber, i) => (
+            { ...accOptions, [frameNumber]: selectedPermutation[i] }
+        ), { isSecondHalf });
+	return calculateRefValues(refOptions, refPlayers());
 }
 
 function clearText() {
