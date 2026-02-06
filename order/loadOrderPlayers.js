@@ -6,13 +6,11 @@ const getOrderHTML = playerInitial => {
 	return html;
 }
 
-const players = orderPlayers;
-
-players().forEach(player => {
+orderPlayers().forEach(player => {
 	const container = document.getElementById("selectors");
 	let newPlayerOption = document.createElement("div");
 	newPlayerOption.innerHTML = getOrderHTML(player.initial);
 	container.append(newPlayerOption);
 })
 
-console.log(players())
+console.log(orderPlayers())

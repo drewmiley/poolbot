@@ -70,20 +70,63 @@ const selectPermutation = framePermutationsWithScore => {
 	}
 }
 
+const getRefOrderFromSelectedPermutation = (selectedPermutation, isSecondHalf, frameNumbers) => {
+	const refOptions = frameNumbers
+		.map(number => number.toLowerCase())
+        .reduce((accOptions, frameNumber, i) => (
+            { ...accOptions, [frameNumber]: selectedPermutation[i] }
+        ), { isSecondHalf });
+	return calculateRefValues(refOptions, refPlayers());
+}
+
 function clearText() {
 	document.getElementById('errorText').innerText = '';
+	document.getElementById('orderTableHead').innerText = '';
+	document.getElementById('refTableHead').innerText = '';
 	['One', 'Two', 'Three', 'Four', 'Five', 'Six'].forEach(number => {
 		document.getElementById(`orderTable${number}`).innerText = '';
+		document.getElementById(`refTable${number}`).innerText = '';
 	})
 }
 
-function selectOrder(options, players) {
+function selectOrder(options, players, withRef) {
 	clearText();
 
 	console.log("SELECT ORDER");
 	console.log(options);
 	console.log(players);
 
+	const framesInHalf = getFramesInHalf(options.teamAreAway, options.isSecondHalf);
+
+	const selectedPermutation = calculateOrderValues(options, players, framesInHalf);
+
+	// Potential TODO: Add * if person gets their preference
+	const frameNumbers = options.isSecondHalf ?
+		['One', 'Two', 'Three', 'Four', 'Five'] :
+		['One', 'Two', 'Three', 'Four', 'Five', 'Six'];
+
+	const refOrder = !options.numberOfReserves && withRef ? getRefOrderFromSelectedPermutation(selectedPermutation, options.isSecondHalf, frameNumbers) : null;
+	console.log(refOrder);
+
+	if (refOrder) {
+		document.getElementById('orderTableHead').innerText = "Pl.";
+		document.getElementById('refTableHead').innerText = "Ref";
+		frameNumbers.forEach((number, i) => {
+			document.getElementById(`orderTable${number}`).innerText = `${selectedPermutation[i]}${framesInHalf[i] ? ' (Br)' : ''}`;
+			document.getElementById(`refTable${number}`).innerText = refOrder[i];
+		});
+
+	} else {
+		document.getElementById('orderTableHead').innerText = "Pl.";
+		frameNumbers.forEach((number, i) => {
+			document.getElementById(`orderTable${number}`).innerText = `${selectedPermutation[i]}${framesInHalf[i] ? ' (Br)' : ''}`;
+		});
+	}
+
+	console.log('Done');
+}
+
+function calculateOrderValues(options, players, framesInHalf) {
 	const halfPlayers = getHalfPlayers(players, options);
 
 	if (halfPlayers.length != (options.isSecondHalf ? 5 : 6)) {
@@ -91,10 +134,7 @@ function selectOrder(options, players) {
 		return;
 	}
 
-	const framesInHalf = getFramesInHalf(options.teamAreAway, options.isSecondHalf);
-
 	console.log(halfPlayers);
-	console.log(framesInHalf);
 
 	const playersAssignedBreaks = getPlayersAssignedBreaks(halfPlayers, framesInHalf);
 
@@ -123,16 +163,5 @@ function selectOrder(options, players) {
 		return;
 	}
 
-	const selectedPermutation = selectPermutation(bestFramePermutations);
-
-	// Potential TODO: Add * if person gets their preference
-	const frameNumbers = options.isSecondHalf ?
-		['One', 'Two', 'Three', 'Four', 'Five'] :
-		['One', 'Two', 'Three', 'Four', 'Five', 'Six'];
-
-	frameNumbers.forEach((number, i) => {
-		document.getElementById(`orderTable${number}`).innerText = `${selectedPermutation[i]}${framesInHalf[i] ? ' (Br)' : ''}`;
-	});
-
-	console.log('Done');
+	return selectPermutation(bestFramePermutations);
 }

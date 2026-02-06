@@ -23,19 +23,22 @@
   		Number of Reserves <input id="numberOfReserves" type="number" value="0" />
   	</div>
     <button id="run">Run</button>
+    <button id="runWithRef">Run with Ref</button>
     <div id="errorText"></div>
     <div>
       <table>
-        <tr><td id="orderTableOne"></td></tr>
-        <tr><td id="orderTableTwo"></td></tr>
-        <tr><td id="orderTableThree"></td></tr>
-        <tr><td id="orderTableFour"></td></tr>
-        <tr><td id="orderTableFive"></td></tr>
-        <tr><td id="orderTableSix"></td></tr>
+        <tr><th id="orderTableHead"></th><th id="refTableHead"></th></tr>
+        <tr><td id="orderTableOne"></td><td id="refTableOne"></td></tr>
+        <tr><td id="orderTableTwo"></td><td id="refTableTwo"></td></tr>
+        <tr><td id="orderTableThree"></td><td id="refTableThree"></td></tr>
+        <tr><td id="orderTableFour"></td><td id="refTableFour"></td></tr>
+        <tr><td id="orderTableFive"></td><td id="refTableFive"></td></tr>
+        <tr><td id="orderTableSix"></td><td id="refTableSix"></td></tr>
       </table>
     </div>
     <script src="../players.js"></script>
-    <script src="./orderPlayers.js"></script>
+    <script src="../ref/selectRef.js"></script>
+    <script src="./loadOrderPlayers.js"></script>
     <script src="./permutations.js"></script>
     <script src="./selectOrder.js"></script>
     <script src="./app.js"></script>

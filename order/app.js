@@ -1,4 +1,6 @@
-document.getElementById('run').onclick = () => run();
+document.getElementById('run').onclick = () => run(false);
+
+document.getElementById('runWithRef').onclick = () => run(true);
 
 const getSelectedValue = (id) => {
 	const e = document.getElementById(id);
@@ -17,18 +19,18 @@ const getSelectedOrderParams = (id) => {
     }
 }
 
-const run = () => {
+const run = (withRef) => {
     console.log('Running');
     const initialOptions = {
         teamAreAway: getSelectedCheckbox('teamAreAway'),
         isSecondHalf: getSelectedCheckbox('isSecondHalf'),
         numberOfReserves: parseInt(getSelectedValue('numberOfReserves'))
     }
-    const team = players();
+    const team = orderPlayers();
     const options = team
         .map(player => player.initial.toLowerCase())
         .reduce((accOptions, playerInitial) => (
             { ...accOptions, [playerInitial]: getSelectedOrderParams(playerInitial) }
         ), initialOptions);
-    selectOrder(options, team);
+    selectOrder(options, team, withRef);
 }
