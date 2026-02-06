@@ -81,6 +81,8 @@ const getRefOrderFromSelectedPermutation = (selectedPermutation, isSecondHalf, f
 
 function clearText() {
 	document.getElementById('errorText').innerText = '';
+	document.getElementById('orderTableHead').innerText = '';
+	document.getElementById('refTableHead').innerText = '';
 	['One', 'Two', 'Three', 'Four', 'Five', 'Six'].forEach(number => {
 		document.getElementById(`orderTable${number}`).innerText = '';
 		document.getElementById(`refTable${number}`).innerText = '';
@@ -107,12 +109,15 @@ function selectOrder(options, players, withRef) {
 	console.log(refOrder);
 
 	if (refOrder) {
+		document.getElementById('orderTableHead').innerText = "Pl.";
+		document.getElementById('refTableHead').innerText = "Ref";
 		frameNumbers.forEach((number, i) => {
 			document.getElementById(`orderTable${number}`).innerText = `${selectedPermutation[i]}${framesInHalf[i] ? ' (Br)' : ''}`;
 			document.getElementById(`refTable${number}`).innerText = refOrder[i];
 		});
 
 	} else {
+		document.getElementById('orderTableHead').innerText = "Pl.";
 		frameNumbers.forEach((number, i) => {
 			document.getElementById(`orderTable${number}`).innerText = `${selectedPermutation[i]}${framesInHalf[i] ? ' (Br)' : ''}`;
 		});
