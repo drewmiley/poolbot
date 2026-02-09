@@ -100,6 +100,8 @@ function selectOrder(options, players, withRef) {
 
 	const selectedPermutation = calculateOrderValues(options, players, framesInHalf);
 
+	if (!selectedPermutation) return;
+
 	// Potential TODO: Add * if person gets their preference
 	const frameNumbers = options.isSecondHalf ?
 		['One', 'Two', 'Three', 'Four', 'Five'] :
