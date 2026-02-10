@@ -89,23 +89,29 @@ function clearText() {
 	})
 }
 
-function selectOrder(options, players, withRef) {
-	clearText();
+function getRetainedOrder(frameNumbers) {
+	return frameNumbers.map(frameNumber => {
+		return document.getElementById(`orderTable${frameNumber}`).innerText.split(" ")[0]
+	})
+}
 
+function selectOrder(options, players, withRef, retainOrder) {
 	console.log("SELECT ORDER");
 	console.log(options);
 	console.log(players);
 
 	const framesInHalf = getFramesInHalf(options.teamAreAway, options.isSecondHalf);
 
-	const selectedPermutation = calculateOrderValues(options, players, framesInHalf);
-
-	if (!selectedPermutation) return;
-
 	// Potential TODO: Add * if person gets their preference
 	const frameNumbers = options.isSecondHalf ?
 		['One', 'Two', 'Three', 'Four', 'Five'] :
 		['One', 'Two', 'Three', 'Four', 'Five', 'Six'];
+
+	const selectedPermutation = retainOrder ? getRetainedOrder(frameNumbers) : calculateOrderValues(options, players, framesInHalf);
+
+	clearText();
+
+	if (!selectedPermutation) return;
 
 	const refOrder = !options.numberOfReserves && withRef ? getRefOrderFromSelectedPermutation(selectedPermutation, options.isSecondHalf, frameNumbers) : null;
 	console.log(refOrder);
