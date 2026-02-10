@@ -119,7 +119,6 @@ function selectOrder(options, players, withRef) {
 		});
 
 	} else {
-		document.getElementById('orderTableHead').innerText = "Pl.";
 		frameNumbers.forEach((number, i) => {
 			document.getElementById(`orderTable${number}`).innerText = `${selectedPermutation[i]}${framesInHalf[i] ? ' (Br)' : ''}`;
 		});
