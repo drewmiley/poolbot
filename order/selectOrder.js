@@ -96,6 +96,10 @@ function getRetainedOrder(frameNumbers) {
 }
 
 function selectOrder(options, players, withRef, retainOrder) {
+	const retainedOrder = retainOrder ? getRetainedOrder(frameNumbers) : null;
+
+	clearText();
+
 	console.log("SELECT ORDER");
 	console.log(options);
 	console.log(players);
@@ -107,13 +111,15 @@ function selectOrder(options, players, withRef, retainOrder) {
 		['One', 'Two', 'Three', 'Four', 'Five'] :
 		['One', 'Two', 'Three', 'Four', 'Five', 'Six'];
 
-	const selectedPermutation = retainOrder ? getRetainedOrder(frameNumbers) : calculateOrderValues(options, players, framesInHalf);
+	const selectedPermutation = retainedOrder || calculateOrderValues(options, players, framesInHalf);
 
-	clearText();
-
-	if (!selectedPermutation) return;
+	if (!selectedPermutation) {
+		document.getElementById('reorderRef').disabled = true;
+		return;
+	}
 
 	const refOrder = !options.numberOfReserves && withRef ? getRefOrderFromSelectedPermutation(selectedPermutation, options.isSecondHalf, frameNumbers) : null;
+	document.getElementById('reorderRef').disabled = !refOrder;
 	console.log(refOrder);
 
 	if (refOrder) {
@@ -123,7 +129,6 @@ function selectOrder(options, players, withRef, retainOrder) {
 			document.getElementById(`orderTable${number}`).innerText = `${selectedPermutation[i]}${framesInHalf[i] ? ' (Br)' : ''}`;
 			document.getElementById(`refTable${number}`).innerText = refOrder[i];
 		});
-
 	} else {
 		frameNumbers.forEach((number, i) => {
 			document.getElementById(`orderTable${number}`).innerText = `${selectedPermutation[i]}${framesInHalf[i] ? ' (Br)' : ''}`;
