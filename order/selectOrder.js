@@ -96,6 +96,11 @@ function getRetainedOrder(frameNumbers) {
 }
 
 function selectOrder(options, players, withRef, retainOrder) {
+	// Potential TODO: Add * if person gets their preference
+	const frameNumbers = options.isSecondHalf ?
+		['One', 'Two', 'Three', 'Four', 'Five'] :
+		['One', 'Two', 'Three', 'Four', 'Five', 'Six'];
+
 	const retainedOrder = retainOrder ? getRetainedOrder(frameNumbers) : null;
 
 	clearText();
@@ -105,11 +110,6 @@ function selectOrder(options, players, withRef, retainOrder) {
 	console.log(players);
 
 	const framesInHalf = getFramesInHalf(options.teamAreAway, options.isSecondHalf);
-
-	// Potential TODO: Add * if person gets their preference
-	const frameNumbers = options.isSecondHalf ?
-		['One', 'Two', 'Three', 'Four', 'Five'] :
-		['One', 'Two', 'Three', 'Four', 'Five', 'Six'];
 
 	const selectedPermutation = retainedOrder || calculateOrderValues(options, players, framesInHalf);
 
