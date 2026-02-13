@@ -118,7 +118,9 @@ function selectOrder(options, players, withRef, retainOrder) {
 		return;
 	}
 
-	const refOrder = !options.numberOfReserves && withRef ? getRefOrderFromSelectedPermutation(selectedPermutation, options.isSecondHalf, frameNumbers) : null;
+	const refOrder = !options.numberOfReserves && !options.teamAreAway && withRef ?
+		getRefOrderFromSelectedPermutation(selectedPermutation, options.isSecondHalf, frameNumbers) :
+		null;
 	document.getElementById('reorderRef').disabled = !refOrder;
 	console.log(refOrder);
 
