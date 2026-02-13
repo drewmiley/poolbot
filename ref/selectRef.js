@@ -45,15 +45,16 @@ const getInitialAllocation = initialArray => {
 const getInitialsNotAllocatedJoinedUnlessPlayingFrame = (notAllocatedInitials, cannotRefInitials) =>
 	notAllocatedInitials.filter(initial => !cannotRefInitials.includes(initial)).join('/');
 
-function clearText() {
-	document.getElementById('errorText').innerText = '';
-	['One', 'Two', 'Three', 'Four', 'Five', 'Six'].forEach(number => {
-		document.getElementById(`ref${number}`).innerText = '';
-	})
-}
+// function clearText() {
+// 	document.getElementById('errorText').innerText = '';
+// 	['One', 'Two', 'Three', 'Four', 'Five', 'Six'].forEach(number => {
+// 		document.getElementById(`ref${number}`).innerText = '';
+// 	})
+// }
 
 function selectRef({ isSecondHalf, one, two, three, four, five, six }, players) {
-	clearText();
+	// clearText();
+	clearRefText();
 
 	if (!one || !two || !three || !four || !five || (!six && !isSecondHalf)) {
 		document.getElementById('errorText').innerText = 'Wrong number of players selected - please modify options';
@@ -66,9 +67,11 @@ function selectRef({ isSecondHalf, one, two, three, four, five, six }, players) 
 
 	const refValues = calculateRefValues({ isSecondHalf, one, two, three, four, five, six }, players)
 
-	const frameNumbers = isSecondHalf ?
-		['One', 'Two', 'Three', 'Four', 'Five'] :
-		['One', 'Two', 'Three', 'Four', 'Five', 'Six'];
+	// const frameNumbers = isSecondHalf ?
+	// 	['One', 'Two', 'Three', 'Four', 'Five'] :
+	// 	['One', 'Two', 'Three', 'Four', 'Five', 'Six'];
+
+	const frameNumbers = getFrameNumbersForHalf(isSecondHalf);	
 
 	frameNumbers.forEach((number, i) => {
 		document.getElementById(`ref${number}`).innerText = refValues[i];
