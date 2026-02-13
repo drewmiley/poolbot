@@ -61,9 +61,7 @@ function selectRef({ isSecondHalf, one, two, three, four, five, six }, players) 
 
 	const frameNumbers = getFrameNumbersForHalf(isSecondHalf);	
 
-	frameNumbers.forEach((number, i) => {
-		setElementText(`ref${number}`, refValues[i]);
-	});
+	frameNumbers.forEach((number, i) => setElementText(`ref${number}`, refValues[i]));
 
 	console.log('Done');
 }	

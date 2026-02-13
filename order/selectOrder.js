@@ -101,15 +101,15 @@ function selectOrder(options, players, withRef, retainOrder) {
 	console.log(refOrder);
 
 	if (refOrder) {
-		document.getElementById('orderTableHead').innerText = "Pl.";
-		document.getElementById('refTableHead').innerText = "Ref";
+		setElementText('orderTableHead', 'Pl.');
+		setElementText('refTableHead', 'Ref');
 		frameNumbers.forEach((number, i) => {
-			document.getElementById(`orderTable${number}`).innerText = `${selectedPermutation[i]}${framesInHalf[i] ? ' (Br)' : ''}`;
-			document.getElementById(`refTable${number}`).innerText = refOrder[i];
+			setElementText(`orderTable${number}`, `${selectedPermutation[i]}${framesInHalf[i] ? ' (Br)' : ''}`);
+			setElementText(`refTable${number}`, refOrder[i]);
 		});
 	} else {
 		frameNumbers.forEach((number, i) => {
-			document.getElementById(`orderTable${number}`).innerText = `${selectedPermutation[i]}${framesInHalf[i] ? ' (Br)' : ''}`;
+			setElementText(`orderTable${number}`, `${selectedPermutation[i]}${framesInHalf[i] ? ' (Br)' : ''}`);
 		});
 	}
 
