@@ -67,12 +67,6 @@ const getRefOrderFromSelectedPermutation = (selectedPermutation, isSecondHalf, f
 	return calculateRefValues(refOptions, refPlayers());
 }
 
-// function getRetainedOrder(frameNumbers) {
-// 	return frameNumbers.map(frameNumber => {
-// 		return document.getElementById(`orderTable${frameNumber}`).innerText.split(" ")[0]
-// 	})
-// }
-
 function selectOrder(options, players, withRef, retainOrder) {
 	// Potential TODO: Add * if person gets their preference
 	const frameNumbers = getFrameNumbersForHalf(options.isSecondHalf);	
