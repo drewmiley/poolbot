@@ -1,3 +1,13 @@
+const getSelectedValue = (id) => {
+	const e = document.getElementById(id);
+	return e.value;
+}
+
+const getSelectedCheckbox = (id) => {
+    const e = document.getElementById(id);
+    return e.checked;
+}
+
 function setElementText(elementId, text) {
 	document.getElementById(elementId).innerText = text;
 }
