@@ -16,6 +16,8 @@ function setElementDisabled(elementId, disabled) {
 	document.getElementById(elementId).disabled = disabled;
 }
 
+const setErrorText = text => setElementText('errorText', text);
+
 function clearRefText() {
 	document.getElementById('errorText').innerText = '';
 	['One', 'Two', 'Three', 'Four', 'Five', 'Six'].forEach(number => {

@@ -150,7 +150,8 @@ function calculateOrderValues(options, players, framesInHalf) {
 	const halfPlayers = getHalfPlayers(players, options);
 
 	if (halfPlayers.length != (options.isSecondHalf ? 5 : 6)) {
-		document.getElementById('errorText').innerText = 'Wrong number of players selected - please modify options';
+		// document.getElementById('errorText').innerText = 'Wrong number of players selected - please modify options';
+		setErrorText('Wrong number of players selected - please modify options');
 		return;
 	}
 

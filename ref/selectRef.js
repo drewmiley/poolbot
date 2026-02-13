@@ -57,11 +57,13 @@ function selectRef({ isSecondHalf, one, two, three, four, five, six }, players) 
 	clearRefText();
 
 	if (!one || !two || !three || !four || !five || (!six && !isSecondHalf)) {
-		document.getElementById('errorText').innerText = 'Wrong number of players selected - please modify options';
+		// document.getElementById('errorText').innerText = 'Wrong number of players selected - please modify options';
+		setErrorText('Wrong number of players selected - please modify options');
 		return;
 	}
 	if (six && isSecondHalf) {
-		document.getElementById('errorText').innerText = 'SIX selected when 2nd half - please modify options';
+		// document.getElementById('errorText').innerText = 'SIX selected when 2nd half - please modify options';
+		setErrorText('SIX selected when 2nd half - please modify options');
 		return;
 	}
 
@@ -83,7 +85,8 @@ function selectRef({ isSecondHalf, one, two, three, four, five, six }, players) 
 function calculateRefValues({ isSecondHalf, one, two, three, four, five, six }, players) {
 	const selectedPlayers = isSecondHalf ? [one, two, three, four, five] : [one, two, three, four, five, six];
 	if (new Set(selectedPlayers).size != selectedPlayers.length) {
-		document.getElementById('errorText').innerText = 'Player has been selected more than once - please modify options';
+		// document.getElementById('errorText').innerText = 'Player has been selected more than once - please modify options';
+		setErrorText('Player has been selected more than once - please modify options');
 		return;
 	}
 	const playing = selectedPlayers.map(selected => players.find(player => player.initial == selected));
