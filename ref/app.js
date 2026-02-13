@@ -1,15 +1,5 @@
 document.getElementById('run').onclick = () => run();
 
-// const getSelectedValue = (id) => {
-// 	const e = document.getElementById(id);
-// 	return e.value;
-// }
-
-// const getSelectedCheckbox = (id) => {
-//     const e = document.getElementById(id);
-//     return e.checked;
-// }
-
 const run = () => {
     console.log('Running');
     const options = {

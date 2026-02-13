@@ -45,33 +45,19 @@ const getInitialAllocation = initialArray => {
 const getInitialsNotAllocatedJoinedUnlessPlayingFrame = (notAllocatedInitials, cannotRefInitials) =>
 	notAllocatedInitials.filter(initial => !cannotRefInitials.includes(initial)).join('/');
 
-// function clearText() {
-// 	document.getElementById('errorText').innerText = '';
-// 	['One', 'Two', 'Three', 'Four', 'Five', 'Six'].forEach(number => {
-// 		document.getElementById(`ref${number}`).innerText = '';
-// 	})
-// }
-
 function selectRef({ isSecondHalf, one, two, three, four, five, six }, players) {
-	// clearText();
 	clearRefText();
 
 	if (!one || !two || !three || !four || !five || (!six && !isSecondHalf)) {
-		// document.getElementById('errorText').innerText = 'Wrong number of players selected - please modify options';
 		setErrorText('Wrong number of players selected - please modify options');
 		return;
 	}
 	if (six && isSecondHalf) {
-		// document.getElementById('errorText').innerText = 'SIX selected when 2nd half - please modify options';
 		setErrorText('SIX selected when 2nd half - please modify options');
 		return;
 	}
 
 	const refValues = calculateRefValues({ isSecondHalf, one, two, three, four, five, six }, players)
-
-	// const frameNumbers = isSecondHalf ?
-	// 	['One', 'Two', 'Three', 'Four', 'Five'] :
-	// 	['One', 'Two', 'Three', 'Four', 'Five', 'Six'];
 
 	const frameNumbers = getFrameNumbersForHalf(isSecondHalf);	
 
@@ -85,7 +71,6 @@ function selectRef({ isSecondHalf, one, two, three, four, five, six }, players) 
 function calculateRefValues({ isSecondHalf, one, two, three, four, five, six }, players) {
 	const selectedPlayers = isSecondHalf ? [one, two, three, four, five] : [one, two, three, four, five, six];
 	if (new Set(selectedPlayers).size != selectedPlayers.length) {
-		// document.getElementById('errorText').innerText = 'Player has been selected more than once - please modify options';
 		setErrorText('Player has been selected more than once - please modify options');
 		return;
 	}
