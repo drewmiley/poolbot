@@ -67,11 +67,11 @@ const getRefOrderFromSelectedPermutation = (selectedPermutation, isSecondHalf, f
 	return calculateRefValues(refOptions, refPlayers());
 }
 
-function getRetainedOrder(frameNumbers) {
-	return frameNumbers.map(frameNumber => {
-		return document.getElementById(`orderTable${frameNumber}`).innerText.split(" ")[0]
-	})
-}
+// function getRetainedOrder(frameNumbers) {
+// 	return frameNumbers.map(frameNumber => {
+// 		return document.getElementById(`orderTable${frameNumber}`).innerText.split(" ")[0]
+// 	})
+// }
 
 function selectOrder(options, players, withRef, retainOrder) {
 	// Potential TODO: Add * if person gets their preference
@@ -100,16 +100,17 @@ function selectOrder(options, players, withRef, retainOrder) {
 	setElementDisabled('reorderRef', !refOrder);
 	console.log(refOrder);
 
+	const orderTableRows = selectedPermutation.map((player, i) => `${player}${framesInHalf[i] ? ' (Br)' : ''}`);
+
 	if (refOrder) {
-		setElementText('orderTableHead', 'Pl.');
-		setElementText('refTableHead', 'Ref');
+		setOrderTableHeaderText();
 		frameNumbers.forEach((number, i) => {
-			setElementText(`orderTable${number}`, `${selectedPermutation[i]}${framesInHalf[i] ? ' (Br)' : ''}`);
+			setElementText(`orderTable${number}`, orderTableRows[i]);
 			setElementText(`refTable${number}`, refOrder[i]);
 		});
 	} else {
 		frameNumbers.forEach((number, i) => {
-			setElementText(`orderTable${number}`, `${selectedPermutation[i]}${framesInHalf[i] ? ' (Br)' : ''}`);
+			setElementText(`orderTable${number}`, orderTableRows[i]);
 		});
 	}
 

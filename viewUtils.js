@@ -34,3 +34,14 @@ function clearOrderText() {
 		document.getElementById(`refTable${number}`).innerText = '';
 	})
 }
+
+function setOrderTableHeaderText() {
+	setElementText('orderTableHead', 'Pl.');
+	setElementText('refTableHead', 'Ref');
+}
+
+function getRetainedOrder(frameNumbers) {
+	return frameNumbers.map(frameNumber => {
+		return document.getElementById(`orderTable${frameNumber}`).innerText.split(" ")[0]
+	})
+}
