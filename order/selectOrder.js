@@ -89,7 +89,20 @@ function clearText() {
 	})
 }
 
-function selectOrder(options, players, withRef) {
+function getRetainedOrder(frameNumbers) {
+	return frameNumbers.map(frameNumber => {
+		return document.getElementById(`orderTable${frameNumber}`).innerText.split(" ")[0]
+	})
+}
+
+function selectOrder(options, players, withRef, retainOrder) {
+	// Potential TODO: Add * if person gets their preference
+	const frameNumbers = options.isSecondHalf ?
+		['One', 'Two', 'Three', 'Four', 'Five'] :
+		['One', 'Two', 'Three', 'Four', 'Five', 'Six'];
+
+	const retainedOrder = retainOrder ? getRetainedOrder(frameNumbers) : null;
+
 	clearText();
 
 	console.log("SELECT ORDER");
@@ -98,16 +111,15 @@ function selectOrder(options, players, withRef) {
 
 	const framesInHalf = getFramesInHalf(options.teamAreAway, options.isSecondHalf);
 
-	const selectedPermutation = calculateOrderValues(options, players, framesInHalf);
+	const selectedPermutation = retainedOrder || calculateOrderValues(options, players, framesInHalf);
 
-	if (!selectedPermutation) return;
-
-	// Potential TODO: Add * if person gets their preference
-	const frameNumbers = options.isSecondHalf ?
-		['One', 'Two', 'Three', 'Four', 'Five'] :
-		['One', 'Two', 'Three', 'Four', 'Five', 'Six'];
+	if (!selectedPermutation) {
+		document.getElementById('reorderRef').disabled = true;
+		return;
+	}
 
 	const refOrder = !options.numberOfReserves && withRef ? getRefOrderFromSelectedPermutation(selectedPermutation, options.isSecondHalf, frameNumbers) : null;
+	document.getElementById('reorderRef').disabled = !refOrder;
 	console.log(refOrder);
 
 	if (refOrder) {
@@ -117,7 +129,6 @@ function selectOrder(options, players, withRef) {
 			document.getElementById(`orderTable${number}`).innerText = `${selectedPermutation[i]}${framesInHalf[i] ? ' (Br)' : ''}`;
 			document.getElementById(`refTable${number}`).innerText = refOrder[i];
 		});
-
 	} else {
 		frameNumbers.forEach((number, i) => {
 			document.getElementById(`orderTable${number}`).innerText = `${selectedPermutation[i]}${framesInHalf[i] ? ' (Br)' : ''}`;

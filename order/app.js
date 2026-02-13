@@ -1,6 +1,8 @@
-document.getElementById('run').onclick = () => run(false);
+document.getElementById('run').onclick = () => run(withRef = false);
 
-document.getElementById('runWithRef').onclick = () => run(true);
+document.getElementById('runWithRef').onclick = () => run(withRef = true);
+
+document.getElementById('reorderRef').onclick = () => run(withRef = true, retainOrder = true);
 
 const getSelectedValue = (id) => {
 	const e = document.getElementById(id);
@@ -19,7 +21,7 @@ const getSelectedOrderParams = (id) => {
     }
 }
 
-const run = (withRef) => {
+const run = (withRef, retainOrder = false) => {
     console.log('Running');
     const initialOptions = {
         teamAreAway: getSelectedCheckbox('teamAreAway'),
@@ -32,5 +34,5 @@ const run = (withRef) => {
         .reduce((accOptions, playerInitial) => (
             { ...accOptions, [playerInitial]: getSelectedOrderParams(playerInitial) }
         ), initialOptions);
-    selectOrder(options, team, withRef);
+    selectOrder(options, team, withRef, retainOrder);
 }
