@@ -10,13 +10,8 @@ const getHalfPlayers = (players, options) => {
 			};
 		});
 
-	const reserves = [...Array(options.numberOfReserves).keys()].map(index => {
-		return {
-			initial: `R${index + 1}`,
-			frameOptions: options.isSecondHalf ? [0, 1, 2, 3, 4] : [0, 1, 2, 3, 4, 5],
-			numberOfBreaks: 0.5
-		}
-	})
+	const createReserveOrderPlayer = reserveOrderPlayerGenerator(options.isSecondHalf);
+	const reserves = [...Array(options.numberOfReserves).keys()].map(createReserveOrderPlayer);
 
 	return halfPlayers.concat(reserves);
 }

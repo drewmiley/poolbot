@@ -15,3 +15,11 @@ const getFrameBreaksInHalf = (teamAreAway, isSecondHalf) => {
 		return [false, true, false, true, false];
 	}
 }
+
+const reserveOrderPlayerGenerator = isSecondHalf => index => {
+	return {
+		initial: `R${index + 1}`,
+		frameOptions: isSecondHalf ? [0, 1, 2, 3, 4] : [0, 1, 2, 3, 4, 5],
+		numberOfBreaks: 0.5
+	}
+}
