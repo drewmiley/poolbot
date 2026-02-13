@@ -4,6 +4,10 @@ document.getElementById('runWithRef').onclick = () => run(withRef = true);
 
 document.getElementById('reorderRef').onclick = () => run(withRef = true, retainOrder = true);
 
+document.getElementById('teamAreAway').addEventListener('change', function() {
+  document.getElementById('runWithRef').disabled = this.checked;
+});
+
 const getSelectedValue = (id) => {
 	const e = document.getElementById(id);
 	return e.value;
