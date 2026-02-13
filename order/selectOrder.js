@@ -21,17 +21,17 @@ const getHalfPlayers = (players, options) => {
 	return halfPlayers.concat(reserves);
 }
 
-const getFramesInHalf = (teamAreAway, isSecondHalf) => {
-	if (teamAreAway && !isSecondHalf) {
-		return [true, false, true, false, true, false];
-	} else if (!teamAreAway && !isSecondHalf) {
-		return [false, true, false, true, false, true];
-	} else if (teamAreAway && isSecondHalf) {
-		return [true, false, true, false, true];
-	} else if (!teamAreAway && isSecondHalf) {
-		return [false, true, false, true, false];
-	}
-}
+// const getFramesInHalf = (teamAreAway, isSecondHalf) => {
+// 	if (teamAreAway && !isSecondHalf) {
+// 		return [true, false, true, false, true, false];
+// 	} else if (!teamAreAway && !isSecondHalf) {
+// 		return [false, true, false, true, false, true];
+// 	} else if (teamAreAway && isSecondHalf) {
+// 		return [true, false, true, false, true];
+// 	} else if (!teamAreAway && isSecondHalf) {
+// 		return [false, true, false, true, false];
+// 	}
+// }
 
 const getPlayersAssignedBreaks = (players, frames) => {
 	const playersWithWeighting = players.reduce((acc, player) => {
@@ -79,15 +79,15 @@ const getRefOrderFromSelectedPermutation = (selectedPermutation, isSecondHalf, f
 	return calculateRefValues(refOptions, refPlayers());
 }
 
-function clearText() {
-	document.getElementById('errorText').innerText = '';
-	document.getElementById('orderTableHead').innerText = '';
-	document.getElementById('refTableHead').innerText = '';
-	['One', 'Two', 'Three', 'Four', 'Five', 'Six'].forEach(number => {
-		document.getElementById(`orderTable${number}`).innerText = '';
-		document.getElementById(`refTable${number}`).innerText = '';
-	})
-}
+// function clearText() {
+// 	document.getElementById('errorText').innerText = '';
+// 	document.getElementById('orderTableHead').innerText = '';
+// 	document.getElementById('refTableHead').innerText = '';
+// 	['One', 'Two', 'Three', 'Four', 'Five', 'Six'].forEach(number => {
+// 		document.getElementById(`orderTable${number}`).innerText = '';
+// 		document.getElementById(`refTable${number}`).innerText = '';
+// 	})
+// }
 
 function getRetainedOrder(frameNumbers) {
 	return frameNumbers.map(frameNumber => {
@@ -97,31 +97,37 @@ function getRetainedOrder(frameNumbers) {
 
 function selectOrder(options, players, withRef, retainOrder) {
 	// Potential TODO: Add * if person gets their preference
-	const frameNumbers = options.isSecondHalf ?
-		['One', 'Two', 'Three', 'Four', 'Five'] :
-		['One', 'Two', 'Three', 'Four', 'Five', 'Six'];
+	// const frameNumbers = options.isSecondHalf ?
+	// 	['One', 'Two', 'Three', 'Four', 'Five'] :
+	// 	['One', 'Two', 'Three', 'Four', 'Five', 'Six'];
+
+	const frameNumbers = getFrameNumbersForHalf(options.isSecondHalf);	
 
 	const retainedOrder = retainOrder ? getRetainedOrder(frameNumbers) : null;
 
-	clearText();
+	// clearText();
+	clearOrderText();
 
 	console.log("SELECT ORDER");
 	console.log(options);
 	console.log(players);
 
-	const framesInHalf = getFramesInHalf(options.teamAreAway, options.isSecondHalf);
+	// const framesInHalf = getFramesInHalf(options.teamAreAway, options.isSecondHalf);
+	const framesInHalf = getFrameBreaksInHalf(options.teamAreAway, options.isSecondHalf);
 
 	const selectedPermutation = retainedOrder || calculateOrderValues(options, players, framesInHalf);
 
 	if (!selectedPermutation) {
-		document.getElementById('reorderRef').disabled = true;
+		// document.getElementById('reorderRef').disabled = true;
+		setElementDisabled('reorderRef', true);
 		return;
 	}
 
 	const refOrder = !options.numberOfReserves && !options.teamAreAway && withRef ?
 		getRefOrderFromSelectedPermutation(selectedPermutation, options.isSecondHalf, frameNumbers) :
 		null;
-	document.getElementById('reorderRef').disabled = !refOrder;
+	// document.getElementById('reorderRef').disabled = !refOrder;
+	setElementDisabled('reorderRef', !refOrder);
 	console.log(refOrder);
 
 	if (refOrder) {
