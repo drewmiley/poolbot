@@ -8,16 +8,6 @@ document.getElementById('teamAreAway').addEventListener('change', function() {
   document.getElementById('runWithRef').disabled = this.checked;
 });
 
-const getSelectedValue = (id) => {
-	const e = document.getElementById(id);
-	return e.value;
-}
-
-const getSelectedCheckbox = (id) => {
-    const e = document.getElementById(id);
-    return e.checked;
-}
-
 const getSelectedOrderParams = (id) => {
     return {
         isSelected: getSelectedCheckbox(`${id}Selected`),
