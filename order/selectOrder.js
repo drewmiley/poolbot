@@ -33,23 +33,24 @@ const getPlayersAssignedBreaks = (players, frames) => {
 };
 
 const getBestFramePermutations = (framePermutation, playersWithBreaksAssigned) => {
-	let unhappyFrames = 0;
+	let unhappyFrames = [];
 	for (let i = 0; i < playersWithBreaksAssigned.length; i++) {
 		const frameIsCorrect = playersWithBreaksAssigned.find(player => player.initial == framePermutation[i]).frameOptions.includes(i);
-		unhappyFrames += !frameIsCorrect ? 1 : 0;
-		if (unhappyFrames > 1) return null;
+		if (!frameIsCorrect) unhappyFrames.push(i);
+		if (unhappyFrames.length > 1) return null;
 	}
-	return { framePermutation, perfect: !unhappyFrames };
+	return { framePermutation, unhappyFrame: unhappyFrames.length === 1 ? unhappyFrames[0] : null };
 }
 
 const selectPermutation = framePermutationsWithScore => {
-	const perfectPermutations = framePermutationsWithScore.filter(perm => perm.perfect);
+	const perfectPermutations = framePermutationsWithScore.filter(perm => perm.unhappyFrame === null);
+	// TODO: This seems slighty untidy
 	if (perfectPermutations.length) {
 		const index = Math.floor(Math.random() * perfectPermutations.length);
-		return perfectPermutations[index].framePermutation;
+		return perfectPermutations[index];
 	} else {
 		const index = Math.floor(Math.random() * framePermutationsWithScore.length);
-		return framePermutationsWithScore[index].framePermutation;
+		return framePermutationsWithScore[index];
 	}
 }
 
@@ -63,7 +64,6 @@ const getRefOrderFromSelectedPermutation = (selectedPermutation, isSecondHalf, f
 }
 
 function selectOrder(options, players, withRef, retainOrder) {
-	// Potential TODO: Add * if person gets their preference
 	const frameNumbers = getFrameNumbersForHalf(options.isSecondHalf);	
 
 	const retainedOrder = retainOrder ? getRetainedOrder(frameNumbers) : null;
@@ -89,7 +89,8 @@ function selectOrder(options, players, withRef, retainOrder) {
 	setElementDisabled('reorderRef', !refOrder);
 	console.log(refOrder);
 
-	const orderTableRows = selectedPermutation.map((player, i) => `${player}${framesInHalf[i] ? ' (Br)' : ''}`);
+	const orderTableRows = selectedPermutation.framePermutation
+		.map((player, i) => `${player}${i === selectedPermutation.unhappyFrame ? '' : '* '}${framesInHalf[i] ? ' (Br)' : ''}`);
 
 	if (refOrder) {
 		setOrderTableHeaderText();

@@ -41,7 +41,15 @@ function setOrderTableHeaderText() {
 }
 
 function getRetainedOrder(frameNumbers) {
-	return frameNumbers.map(frameNumber => {
-		return document.getElementById(`orderTable${frameNumber}`).innerText.split(" ")[0]
-	})
+	const frames = frameNumbers.map(frameNumber => {
+		const frameNumberOrderInnerText = document.getElementById(`orderTable${frameNumber}`).innerText;
+		const player = frameNumberOrderInnerText.split(" ")[0];
+		const happy = frameNumberOrderInnerText.includes("*");
+		return { player, happy };
+	});
+	const unhappyFrame = frames.map(frame => frame.happy).indexOf(false);
+	return {
+		framePermutation: frames.map(frame => frame.player),
+		unhappyFrames: unhappyFrame === -1 ? null : unhappyFrame
+	}
 }
