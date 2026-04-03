@@ -85,7 +85,7 @@ const GP = {
 
 const JC = {
 	initial: 'JC',
-	refPreferenceBeforeInit: true,
+	refPreferenceBeforeInit: null,
 	preferredNumberOfBreaks: [0, 1],
 	firstHalfPreferences: [MIDDLE],
 	secondHalfPreferences: [EARLY]
